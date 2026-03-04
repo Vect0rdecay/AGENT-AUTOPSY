@@ -1,0 +1,1101 @@
+{
+  "source": "https://embracethered.com/blog/",
+  "description": "Agentic AI security posts from blog index, excluding Month of AI Bugs 29. Video URLs unknown from index.",
+  "posts": [
+    {
+      "date": "2026-02-11",
+      "title": "Scary Agent Skills: Hidden Unicode Instructions in Skills ...And How To Catch Them",
+      "url": "https://embracethered.com/blog/posts/2026/scary-agent-skills/",
+      "exploit_types": [
+        "Prompt injection (invisible)"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-001",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2026-02-04",
+      "title": "OpenAI Explains URL-Based Data Exfiltration Mitigations in New Paper",
+      "url": "https://embracethered.com/blog/posts/2026/data-exfiltration-mitigation-paper-by-openai/",
+      "exploit_types": [
+        "Data exfiltration",
+        "Other"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-002",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2025-12-30",
+      "title": "Agentic ProbLLMs: Exploiting AI Computer-Use And Coding Agents (39C3 Video + Slides)",
+      "url": "https://embracethered.com/blog/posts/2025/39c3-agentic-probllms-exploiting-computer-use-and-coding-agents/",
+      "exploit_types": [
+        "Remote code execution (RCE)",
+        "Zombie agent / C2"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-003",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2025-12-04",
+      "title": "The Normalization of Deviance in AI",
+      "url": "https://embracethered.com/blog/posts/2025/the-normalization-of-deviance-in-ai/",
+      "exploit_types": [
+        "Other"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-004",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2025-11-25",
+      "title": "Antigravity Grounded! Security Vulnerabilities in Google's Latest IDE",
+      "url": "https://embracethered.com/blog/posts/2025/security-keeps-google-antigravity-grounded/",
+      "exploit_types": [
+        "Other"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-005",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2025-10-28",
+      "title": "Claude Pirate: Abusing Anthropic's File API For Data Exfiltration",
+      "url": "https://embracethered.com/blog/posts/2025/claude-abusing-network-access-and-anthropic-api-for-data-exfiltration/",
+      "exploit_types": [
+        "Data exfiltration"
+      ],
+      "ecosystems": [
+        "Anthropic"
+      ],
+      "id": "ETR-006",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2025-09-24",
+      "title": "Cross-Agent Privilege Escalation: When Agents Free Each Other",
+      "url": "https://embracethered.com/blog/posts/2025/cross-agent-privilege-escalation-agents-that-free-each-other/",
+      "exploit_types": [
+        "Privilege / escalation"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-007",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2025-06-24",
+      "title": "Security Advisory: Anthropic's Slack MCP Server Vulnerable to Data Exfiltration",
+      "url": "https://embracethered.com/blog/posts/2025/security-advisory-anthropic-slack-mcp-server-data-leakage/",
+      "exploit_types": [
+        "Data exfiltration"
+      ],
+      "ecosystems": [
+        "Anthropic"
+      ],
+      "id": "ETR-037",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2025-06-08",
+      "title": "Hosting COM Servers with an MCP Server",
+      "url": "https://embracethered.com/blog/posts/2025/mcp-com-server-automate-anything-on-windows/",
+      "exploit_types": [
+        "Other"
+      ],
+      "ecosystems": [
+        "MCP (generic)"
+      ],
+      "id": "ETR-038",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2025-05-24",
+      "title": "AI ClickFix: Hijacking Computer-Use Agents Using ClickFix",
+      "url": "https://embracethered.com/blog/posts/2025/ai-clickfix-ttp-claude/",
+      "exploit_types": [
+        "Zombie agent / C2",
+        "Remote code execution (RCE)"
+      ],
+      "ecosystems": [
+        "Anthropic"
+      ],
+      "id": "ETR-039",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2025-05-04",
+      "title": "How ChatGPT Remembers You: A Deep Dive into Its Memory and Chat History Features",
+      "url": "https://embracethered.com/blog/posts/2025/chatgpt-how-does-chat-history-memory-preferences-work/",
+      "exploit_types": [
+        "Other"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-040",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2025-05-02",
+      "title": "MCP: Untrusted Servers and Confused Clients, Plus a Sneaky Exploit",
+      "url": "https://embracethered.com/blog/posts/2025/model-context-protocol-security-risks-and-exploits/",
+      "exploit_types": [
+        "Data exfiltration",
+        "Other"
+      ],
+      "ecosystems": [
+        "MCP (generic)"
+      ],
+      "id": "ETR-041",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2025-04-06",
+      "title": "GitHub Copilot Custom Instructions and Risks",
+      "url": "https://embracethered.com/blog/posts/2025/github-custom-copilot-instructions/",
+      "exploit_types": [
+        "Other"
+      ],
+      "ecosystems": [
+        "GitHub Copilot"
+      ],
+      "id": "ETR-042",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2025-03-12",
+      "title": "Sneaky Bits: Advanced Data Smuggling Techniques (ASCII Smuggler Updates)",
+      "url": "https://embracethered.com/blog/posts/2025/sneaky-bits-and-ascii-smuggler/",
+      "exploit_types": [
+        "Prompt injection (invisible)",
+        "Other"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-043",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2025-02-17",
+      "title": "ChatGPT Operator: Prompt Injection Exploits & Defenses",
+      "url": "https://embracethered.com/blog/posts/2025/chatgpt-operator-prompt-injection-exploits/",
+      "exploit_types": [
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-044",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2025-02-10",
+      "title": "Hacking Gemini's Memory with Prompt Injection and Delayed Tool Invocation",
+      "url": "https://embracethered.com/blog/posts/2025/gemini-memory-persistence-prompt-injection/",
+      "exploit_types": [
+        "Data exfiltration",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-045",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2025-01-06",
+      "title": "AI Domination: Remote Controlling ChatGPT ZombAI Instances",
+      "url": "https://embracethered.com/blog/posts/2025/spaiware-and-chatgpt-command-and-control-via-prompt-injection-zombai/",
+      "exploit_types": [
+        "Zombie agent / C2",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-046",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2025-01-02",
+      "title": "Microsoft 365 Copilot Generated Images Accessible Without Authentication -- Fixed!",
+      "url": "https://embracethered.com/blog/posts/2025/m365-copilot-image-generation-without-authentication/",
+      "exploit_types": [
+        "Path / access control",
+        "Data exfiltration"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-047",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-12-23",
+      "title": "Trust No AI: Prompt Injection Along the CIA Security Triad Paper",
+      "url": "https://embracethered.com/blog/posts/2024/trust-no-ai-prompt-injection-along-the-cia-security-triad-paper/",
+      "exploit_types": [
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-048",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-12-16",
+      "title": "Security ProbLLMs in xAI's Grok: A Deep Dive",
+      "url": "https://embracethered.com/blog/posts/2024/security-probllms-in-xai-grok/",
+      "exploit_types": [
+        "Other"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-049",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-12-06",
+      "title": "Terminal DiLLMa: LLM-powered Apps Can Hijack Your Terminal Via Prompt Injection",
+      "url": "https://embracethered.com/blog/posts/2024/terminal-dillmas-prompt-injection-ansi-sequences/",
+      "exploit_types": [
+        "Remote code execution (RCE)",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-050",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-11-29",
+      "title": "DeepSeek AI: From Prompt Injection To Account Takeover",
+      "url": "https://embracethered.com/blog/posts/2024/deepseek-ai-prompt-injection-to-xss-and-account-takeover/",
+      "exploit_types": [
+        "Privilege / escalation",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-051",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-10-24",
+      "title": "ZombAIs: From Prompt Injection to C2 with Claude Computer Use",
+      "url": "https://embracethered.com/blog/posts/2024/claude-computer-use-c2-the-zombais-are-coming/",
+      "exploit_types": [
+        "Zombie agent / C2",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Anthropic"
+      ],
+      "id": "ETR-052",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-09-20",
+      "title": "Spyware Injection Into Your ChatGPT's Long-Term Memory (SpAIware)",
+      "url": "https://embracethered.com/blog/posts/2024/chatgpt-macos-app-persistent-data-exfiltration/",
+      "exploit_types": [
+        "Data exfiltration",
+        "Zombie agent / C2",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-053",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-08-26",
+      "title": "Microsoft Copilot: From Prompt Injection to Exfiltration of Personal Information",
+      "url": "https://embracethered.com/blog/posts/2024/m365-copilot-prompt-injection-tool-invocation-and-data-exfil-using-ascii-smuggling/",
+      "exploit_types": [
+        "Data exfiltration",
+        "Prompt injection (direct)",
+        "Prompt injection (invisible)"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-054",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-08-21",
+      "title": "Google AI Studio: LLM-Powered Data Exfiltration Hits Again! Quickly Fixed.",
+      "url": "https://embracethered.com/blog/posts/2024/google-ai-studio-data-exfiltration-now-fixed/",
+      "exploit_types": [
+        "Data exfiltration"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-055",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-07-30",
+      "title": "Protect Your Copilots: Preventing Data Leaks in Copilot Studio",
+      "url": "https://embracethered.com/blog/posts/2024/copilot-studio-protect-your-copilots/",
+      "exploit_types": [
+        "Data exfiltration"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-056",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-07-24",
+      "title": "Google Colab AI: Data Leakage Through Image Rendering Fixed. Some Risks Remain.",
+      "url": "https://embracethered.com/blog/posts/2024/google-colab-image-render-exfil/",
+      "exploit_types": [
+        "Data exfiltration",
+        "Prompt injection (indirect)"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-057",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-07-22",
+      "title": "Breaking Instruction Hierarchy in OpenAI's gpt-4o-mini",
+      "url": "https://embracethered.com/blog/posts/2024/chatgpt-gpt-4o-mini-instruction-hierarchie-bypasses/",
+      "exploit_types": [
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-058",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-07-08",
+      "title": "Sorry, ChatGPT Is Under Maintenance: Persistent Denial of Service through Prompt Injection and Memory Attacks",
+      "url": "https://embracethered.com/blog/posts/2024/chatgpt-persistent-denial-of-service/",
+      "exploit_types": [
+        "Denial of service",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-059",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-06-14",
+      "title": "GitHub Copilot Chat: From Prompt Injection to Data Exfiltration",
+      "url": "https://embracethered.com/blog/posts/2024/github-copilot-chat-prompt-injection-data-exfiltration/",
+      "exploit_types": [
+        "Data exfiltration",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "GitHub Copilot"
+      ],
+      "id": "ETR-060",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-05-28",
+      "title": "Automatic Tool Invocation when Browsing with ChatGPT - Threats and Mitigations",
+      "url": "https://embracethered.com/blog/posts/2024/llm-apps-automatic-tool-invocations/",
+      "exploit_types": [
+        "Prompt injection (indirect)"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-061",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-05-22",
+      "title": "ChatGPT: Hacking Memories with Prompt Injection",
+      "url": "https://embracethered.com/blog/posts/2024/chatgpt-hacking-memories/",
+      "exploit_types": [
+        "Data exfiltration",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-062",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-04-15",
+      "title": "Bobby Tables but with LLM Apps - Google NotebookLM Data Exfiltration",
+      "url": "https://embracethered.com/blog/posts/2024/google-notebook-ml-data-exfiltration/",
+      "exploit_types": [
+        "Data exfiltration"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-063",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-04-07",
+      "title": "Google AI Studio Data Exfiltration via Prompt Injection - Possible Regression and Fix",
+      "url": "https://embracethered.com/blog/posts/2024/google-aistudio-mass-data-exfil/",
+      "exploit_types": [
+        "Data exfiltration",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-064",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-04-02",
+      "title": "The dangers of AI agents unfurling hyperlinks and what to do about it",
+      "url": "https://embracethered.com/blog/posts/2024/the-dangers-of-unfurling-and-what-you-can-do-about-it/",
+      "exploit_types": [
+        "Prompt injection (indirect)"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-065",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-03-04",
+      "title": "ASCII Smuggler - Improvements",
+      "url": "https://embracethered.com/blog/posts/2024/ascii-smuggler-updates/",
+      "exploit_types": [
+        "Prompt injection (invisible)",
+        "Other"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-066",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-03-02",
+      "title": "Who Am I? Conditional Prompt Injection Attacks with Microsoft Copilot",
+      "url": "https://embracethered.com/blog/posts/2024/whoami-conditional-prompt-injection-instructions/",
+      "exploit_types": [
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-067",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-02-22",
+      "title": "Google Gemini: Planting Instructions For Delayed Automatic Tool Invocation",
+      "url": "https://embracethered.com/blog/posts/2024/llm-context-pollution-and-delayed-automated-tool-invocation/",
+      "exploit_types": [
+        "Prompt injection (indirect)"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-068",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-02-14",
+      "title": "ChatGPT: Lack of Isolation between Code Interpreter sessions of GPTs",
+      "url": "https://embracethered.com/blog/posts/2024/lack-of-isolation-gpts-code-interpreter/",
+      "exploit_types": [
+        "Path / access control",
+        "Data exfiltration"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-069",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-02-12",
+      "title": "Video: ASCII Smuggling and Hidden Prompt Instructions",
+      "url": "https://embracethered.com/blog/posts/2024/ascii-smuggling-and-hidden-prompt-instructions/",
+      "exploit_types": [
+        "Prompt injection (invisible)"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-070",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-02-08",
+      "title": "Hidden Prompt Injections with Anthropic Claude",
+      "url": "https://embracethered.com/blog/posts/2024/claude-hidden-prompt-injection-ascii-smuggling/",
+      "exploit_types": [
+        "Prompt injection (invisible)"
+      ],
+      "ecosystems": [
+        "Anthropic"
+      ],
+      "id": "ETR-071",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-01-28",
+      "title": "Exploring Google Bard's Data Visualization Feature (Code Interpreter)",
+      "url": "https://embracethered.com/blog/posts/2024/exploring-google-bard-vm/",
+      "exploit_types": [
+        "Other"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-072",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-01-18",
+      "title": "AWS Fixes Data Exfiltration Attack Angle in Amazon Q for Business",
+      "url": "https://embracethered.com/blog/posts/2024/aws-amazon-q-fixes-markdown-rendering-vulnerability/",
+      "exploit_types": [
+        "Data exfiltration"
+      ],
+      "ecosystems": [
+        "Amazon Q / AWS"
+      ],
+      "id": "ETR-073",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2024-01-14",
+      "title": "ASCII Smuggler Tool: Crafting Invisible Text and Decoding Hidden Codes",
+      "url": "https://embracethered.com/blog/posts/2024/hiding-and-finding-text-with-unicode-tags/",
+      "exploit_types": [
+        "Prompt injection (invisible)",
+        "Other"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-074",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-12-30",
+      "title": "37th Chaos Communication Congress: New Important Instructions (Video + Slides)",
+      "url": "https://embracethered.com/blog/posts/2023/37c3-new-important-instructions/",
+      "exploit_types": [
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-075",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-12-20",
+      "title": "OpenAI Begins Tackling ChatGPT Data Leak Vulnerability",
+      "url": "https://embracethered.com/blog/posts/2023/openai-data-exfiltration-first-mitigations-implemented/",
+      "exploit_types": [
+        "Data exfiltration"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-076",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-12-12",
+      "title": "Malicious ChatGPT Agents: How GPTs Can Quietly Grab Your Data (Demo)",
+      "url": "https://embracethered.com/blog/posts/2023/openai-custom-malware-gpt/",
+      "exploit_types": [
+        "Data exfiltration"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-077",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-11-28",
+      "title": "Ekoparty Talk - Prompt Injections in the Wild",
+      "url": "https://embracethered.com/blog/posts/2023/ekoparty-prompt-injection-talk/",
+      "exploit_types": [
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-078",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-11-03",
+      "title": "Hacking Google Bard - From Prompt Injection to Data Exfiltration",
+      "url": "https://embracethered.com/blog/posts/2023/google-bard-data-exfiltration/",
+      "exploit_types": [
+        "Data exfiltration",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-079",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-10-19",
+      "title": "Google Cloud Vertex AI - Data Exfiltration Vulnerability Fixed in Generative AI Studio",
+      "url": "https://embracethered.com/blog/posts/2023/google-gcp-generative-ai-studio-data-exfiltration-fixed/",
+      "exploit_types": [
+        "Data exfiltration"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-080",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-09-29",
+      "title": "Microsoft Fixes Data Exfiltration Vulnerability in Azure AI Playground",
+      "url": "https://embracethered.com/blog/posts/2023/data-exfiltration-in-azure-openai-playground-fixed/",
+      "exploit_types": [
+        "Data exfiltration"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-081",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-09-28",
+      "title": "Advanced Data Exfiltration Techniques with ChatGPT",
+      "url": "https://embracethered.com/blog/posts/2023/advanced-plugin-data-exfiltration-trickery/",
+      "exploit_types": [
+        "Data exfiltration"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-082",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-09-18",
+      "title": "HITCON CMT 2023 - LLM Security Presentation and Trip Report",
+      "url": "https://embracethered.com/blog/posts/2023/hitcon-llm-security-presentation-and-trip-report/",
+      "exploit_types": [
+        "Other"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-083",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-09-16",
+      "title": "LLM Apps: Don't Get Stuck in an Infinite Loop!",
+      "url": "https://embracethered.com/blog/posts/2023/llm-cost-and-dos-threat/",
+      "exploit_types": [
+        "Denial of service"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-084",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-08-28",
+      "title": "Video: Data Exfiltration Vulnerabilities in LLM apps (Bing Chat, ChatGPT, Claude)",
+      "url": "https://embracethered.com/blog/posts/2023/video-data-exfiltration-vulns-in-llm-applictions/",
+      "exploit_types": [
+        "Data exfiltration"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-085",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-08-01",
+      "title": "Anthropic Claude Data Exfiltration Vulnerability Fixed",
+      "url": "https://embracethered.com/blog/posts/2023/anthropic-fixes-claude-data-exfiltration-via-images/",
+      "exploit_types": [
+        "Data exfiltration",
+        "Prompt injection (indirect)"
+      ],
+      "ecosystems": [
+        "Anthropic"
+      ],
+      "id": "ETR-086",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-07-24",
+      "title": "ChatGPT Custom Instructions: Persistent Data Exfiltration Demo",
+      "url": "https://embracethered.com/blog/posts/2023/chatgpt-custom-instruction-post-exploitation-data-exfiltration/",
+      "exploit_types": [
+        "Data exfiltration",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-087",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-07-14",
+      "title": "Image to Prompt Injection with Google Bard",
+      "url": "https://embracethered.com/blog/posts/2023/google-bard-image-to-prompt-injection/",
+      "exploit_types": [
+        "Prompt injection (indirect)"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-088",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-07-12",
+      "title": "Google Docs AI Features: Vulnerabilities and Risks",
+      "url": "https://embracethered.com/blog/posts/2023/google-docs-ai-scam/",
+      "exploit_types": [
+        "Other"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-089",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-07-06",
+      "title": "OpenAI Removes the \"Chat with Code\" Plugin From Store",
+      "url": "https://embracethered.com/blog/posts/2023/chatgpt-chat-with-code-plugin-take-down/",
+      "exploit_types": [
+        "Other"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-090",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-06-20",
+      "title": "Plugin Vulnerabilities: Visit a Website and Have Your Source Code Stolen",
+      "url": "https://embracethered.com/blog/posts/2023/chatgpt-plugin-vulns-chat-with-code/",
+      "exploit_types": [
+        "Data exfiltration",
+        "Prompt injection (indirect)"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-091",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-06-18",
+      "title": "Bing Chat: Data Exfiltration Exploit Explained",
+      "url": "https://embracethered.com/blog/posts/2023/bing-chat-data-exfiltration-poc-and-fix/",
+      "exploit_types": [
+        "Data exfiltration"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-092",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-06-11",
+      "title": "Exploit ChatGPT and Enter the Matrix to Learn about AI Security",
+      "url": "https://embracethered.com/blog/posts/2023/chatgpt-vulns-enter-the-matrix/",
+      "exploit_types": [
+        "Other"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-093",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-05-28",
+      "title": "ChatGPT Plugin Exploit Explained: From Prompt Injection to Accessing Private Data",
+      "url": "https://embracethered.com/blog/posts/2023/chatgpt-cross-plugin-request-forgery-and-prompt-injection./",
+      "exploit_types": [
+        "Data exfiltration",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-094",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-05-16",
+      "title": "ChatGPT Plugins: Data Exfiltration via Images & Cross Plugin Request Forgery",
+      "url": "https://embracethered.com/blog/posts/2023/chatgpt-webpilot-data-exfil-via-markdown-injection/",
+      "exploit_types": [
+        "Data exfiltration",
+        "Prompt injection (indirect)"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-095",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-05-14",
+      "title": "Indirect Prompt Injection via YouTube Transcripts",
+      "url": "https://embracethered.com/blog/posts/2023/chatgpt-plugin-youtube-indirect-prompt-injection/",
+      "exploit_types": [
+        "Prompt injection (indirect)"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-096",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-05-11",
+      "title": "Adversarial Prompting: Tutorial and Lab",
+      "url": "https://embracethered.com/blog/posts/2023/adversarial-prompting-tutorial-and-lab/",
+      "exploit_types": [
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-097",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-05-10",
+      "title": "Video: Prompt Injections - An Introduction",
+      "url": "https://embracethered.com/blog/posts/2023/prompt-injection-an-introduction-video/",
+      "exploit_types": [
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-098",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-04-27",
+      "title": "MLSecOps Podcast: AI Red Teaming and Threat Modeling Machine Learning Systems",
+      "url": "https://embracethered.com/blog/posts/2023/mlsecops-podcast-ai-red-teaming/",
+      "exploit_types": [
+        "Other"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-099",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-04-15",
+      "title": "Don't blindly trust LLM responses. Threats to chatbots.",
+      "url": "https://embracethered.com/blog/posts/2023/ai-injections-threats-context-matters/",
+      "exploit_types": [
+        "Other"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-100",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-03-29",
+      "title": "AI Injections: Direct and Indirect Prompt Injections and Their Implications",
+      "url": "https://embracethered.com/blog/posts/2023/ai-injections-direct-and-indirect-prompt-injection-basics/",
+      "exploit_types": [
+        "Prompt injection (direct)",
+        "Prompt injection (indirect)"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-101",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-03-26",
+      "title": "Bing Chat claims to have robbed a bank and it left no trace",
+      "url": "https://embracethered.com/blog/posts/2023/bing-chat-bank-robbery/",
+      "exploit_types": [
+        "Other"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "id": "ETR-102",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2023-03-05",
+      "title": "Yolo: Natural Language to Shell Commands with ChatGPT API",
+      "url": "https://embracethered.com/blog/posts/2023/yolo-natural-language-to-bash-command-with-chatgpt-api/",
+      "exploit_types": [
+        "Remote code execution (RCE)",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-103",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2022-12-02",
+      "title": "ChatGPT: Imagine you are a database server",
+      "url": "https://embracethered.com/blog/posts/2022/chatgpt-imagine-you-are-a-database/",
+      "exploit_types": [
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-104",
+      "source": "blog_index",
+      "video_url": null
+    },
+    {
+      "date": "2022-04-11",
+      "title": "GPT-3 and Phishing Attacks",
+      "url": "https://embracethered.com/blog/posts/2022/gpt-3-ai-and-phishing-attacks/",
+      "exploit_types": [
+        "Other"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "id": "ETR-105",
+      "source": "blog_index",
+      "video_url": null
+    }
+  ]
+}

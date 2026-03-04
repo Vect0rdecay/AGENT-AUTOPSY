@@ -1,0 +1,440 @@
+{
+  "source": "https://embracethered.com/blog/posts/2025/wrapping-up-month-of-ai-bugs/",
+  "harvested": "2025-03-03",
+  "posts": [
+    {
+      "id": "ETR-008",
+      "date": "2025-08-29",
+      "title": "Season Finale: AgentHopper: An AI Virus Research Project Demonstration",
+      "url": "https://embracethered.com/blog/posts/2025/agenthopper-a-poc-ai-virus/",
+      "video_url": "https://www.youtube.com/watch?v=vlF0sblunQY",
+      "exploit_types": [
+        "Zombie agent / C2",
+        "Other"
+      ],
+      "ecosystems": [
+        "Other / Multi"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-009",
+      "date": "2025-08-28",
+      "title": "Windsurf MCP Integration: Missing Security Controls Put Users at Risk",
+      "url": "https://embracethered.com/blog/posts/2025/windsurf-dangers-lack-of-security-controls-for-mcp-server-tool-invocation/",
+      "video_url": "https://www.youtube.com/watch?v=CFTQrnFaf0k",
+      "exploit_types": [
+        "Path / access control",
+        "Other"
+      ],
+      "ecosystems": [
+        "Windsurf",
+        "MCP (generic)"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-010",
+      "date": "2025-08-27",
+      "title": "Cline: Vulnerable to Data Exfiltration and How to Protect Your Data",
+      "url": "https://embracethered.com/blog/posts/2025/cline-vulnerable-to-data-exfiltration/",
+      "video_url": "https://www.youtube.com/watch?v=F8B2sg62iOo",
+      "exploit_types": [
+        "Data exfiltration",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Cline"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-011",
+      "date": "2025-08-26",
+      "title": "AWS Kiro: Arbitrary Code Execution via Indirect Prompt Injection",
+      "url": "https://embracethered.com/blog/posts/2025/aws-kiro-aribtrary-command-execution-with-indirect-prompt-injection/",
+      "video_url": "https://www.youtube.com/watch?v=yAvb4I9KRsM",
+      "exploit_types": [
+        "Remote code execution (RCE)",
+        "Prompt injection (indirect)"
+      ],
+      "ecosystems": [
+        "Amazon Q / AWS"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-012",
+      "date": "2025-08-25",
+      "title": "Manus: How Prompt Injection Hijacks Manus to Expose VS Code Server to the Internet",
+      "url": "https://embracethered.com/blog/posts/2025/manus-ai-kill-chain-expose-port-vs-code-server-on-internet/",
+      "video_url": "https://www.youtube.com/watch?v=HaXKSAfcuwo",
+      "exploit_types": [
+        "Remote code execution (RCE)",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Manus"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-013",
+      "date": "2025-08-24",
+      "title": "Deep Research Agents: How Deep Research Agents Can Leak Your Data",
+      "url": "https://embracethered.com/blog/posts/2025/chatgpt-deep-research-connectors-data-spill-and-leaks/",
+      "video_url": null,
+      "exploit_types": [
+        "Data exfiltration"
+      ],
+      "ecosystems": [
+        "Deep Research Agents",
+        "ChatGPT / OpenAI"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-014",
+      "date": "2025-08-23",
+      "title": "Windsurf: Sneaking Invisible Instructions by Developers",
+      "url": "https://embracethered.com/blog/posts/2025/windsurf-sneaking-invisible-instructions-for-prompt-injection/",
+      "video_url": null,
+      "exploit_types": [
+        "Prompt injection (invisible)"
+      ],
+      "ecosystems": [
+        "Windsurf"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-015",
+      "date": "2025-08-22",
+      "title": "Windsurf: Memory-Persistent Data Exfiltration - SpAIware Exploit",
+      "url": "https://embracethered.com/blog/posts/2025/windsurf-spaiware-exploit-persistent-prompt-injection/",
+      "video_url": null,
+      "exploit_types": [
+        "Data exfiltration",
+        "Zombie agent / C2",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Windsurf"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-016",
+      "date": "2025-08-21",
+      "title": "Windsurf: Hijacking Windsurf: How Prompt Injection Leaks Developer Secrets",
+      "url": "https://embracethered.com/blog/posts/2025/windsurf-data-exfiltration-vulnerabilities/",
+      "video_url": "https://www.youtube.com/watch?v=lTkiCe3uhEY",
+      "exploit_types": [
+        "Data exfiltration",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Windsurf"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-017",
+      "date": "2025-08-20",
+      "title": "Amazon Q Developer: Vulnerable to Invisible Prompt Injection",
+      "url": "https://embracethered.com/blog/posts/2025/amazon-q-developer-interprets-hidden-instructions/",
+      "video_url": "https://youtu.be/m0kwjEPw2j0?t=485",
+      "exploit_types": [
+        "Prompt injection (invisible)"
+      ],
+      "ecosystems": [
+        "Amazon Q / AWS"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-018",
+      "date": "2025-08-19",
+      "title": "Amazon Q Developer: Remote Code Execution via Prompt Injection",
+      "url": "https://embracethered.com/blog/posts/2025/amazon-q-developer-remote-code-execution/",
+      "video_url": "https://youtu.be/m0kwjEPw2j0",
+      "exploit_types": [
+        "Remote code execution (RCE)",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Amazon Q / AWS"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-019",
+      "date": "2025-08-18",
+      "title": "Amazon Q Developer: Secrets Leaked via DNS and Prompt Injection",
+      "url": "https://embracethered.com/blog/posts/2025/amazon-q-developer-data-exfil-via-dns/",
+      "video_url": "https://youtu.be/p9aj7cvo-Wc",
+      "exploit_types": [
+        "Data exfiltration",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Amazon Q / AWS"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-020",
+      "date": "2025-08-17",
+      "title": "Amp Code: Data Exfiltration via Image Rendering Fixed",
+      "url": "https://embracethered.com/blog/posts/2025/amp-code-fixed-data-exfiltration-via-images/",
+      "video_url": "https://youtu.be/KpU8XBFhWSE",
+      "exploit_types": [
+        "Data exfiltration",
+        "Prompt injection (indirect)"
+      ],
+      "ecosystems": [
+        "Amp Code / Sourcegraph"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-021",
+      "date": "2025-08-16",
+      "title": "Amp Code: Invisible Prompt Injection Vulnerability Fixed",
+      "url": "https://embracethered.com/blog/posts/2025/amp-code-fixed-invisible-prompt-injection/",
+      "video_url": null,
+      "exploit_types": [
+        "Prompt injection (invisible)"
+      ],
+      "ecosystems": [
+        "Amp Code / Sourcegraph"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-022",
+      "date": "2025-08-15",
+      "title": "Google Jules: Vulnerable To Invisible Prompt Injection",
+      "url": "https://embracethered.com/blog/posts/2025/google-jules-invisible-prompt-injection/",
+      "video_url": null,
+      "exploit_types": [
+        "Prompt injection (invisible)"
+      ],
+      "ecosystems": [
+        "Google Jules"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-023",
+      "date": "2025-08-14",
+      "title": "Google Jules - Zombie Agent: From Prompt Injection to Remote Control",
+      "url": "https://embracethered.com/blog/posts/2025/google-jules-remote-code-execution-zombai/",
+      "video_url": null,
+      "exploit_types": [
+        "Zombie agent / C2",
+        "Remote code execution (RCE)",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Google Jules"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-024",
+      "date": "2025-08-13",
+      "title": "Google Jules: Vulnerable to Multiple Data Exfiltration Issues",
+      "url": "https://embracethered.com/blog/posts/2025/google-jules-vulnerable-to-data-exfiltration-issues/",
+      "video_url": null,
+      "exploit_types": [
+        "Data exfiltration",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Google Jules"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-025",
+      "date": "2025-08-12",
+      "title": "GitHub Copilot: Remote Code Execution (CVE-2025-53773)",
+      "url": "https://embracethered.com/blog/posts/2025/github-copilot-remote-code-execution-via-prompt-injection/",
+      "video_url": "https://youtu.be/8Qzqgqxp5ho",
+      "exploit_types": [
+        "Remote code execution (RCE)",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "GitHub Copilot"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-026",
+      "date": "2025-08-11",
+      "title": "Claude Code: Data Exfiltration with DNS Requests (CVE-2025-55284)",
+      "url": "https://embracethered.com/blog/posts/2025/claude-code-exfiltration-via-dns-requests/",
+      "video_url": "https://youtu.be/NgT2FkfSWg4",
+      "exploit_types": [
+        "Data exfiltration",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Anthropic"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-027",
+      "date": "2025-08-10",
+      "title": "OpenHands: Remote Code Execution and AI ClickFix Demo",
+      "url": "https://embracethered.com/blog/posts/2025/openhands-remote-code-execution-zombai/",
+      "video_url": "https://www.youtube.com/watch?v=QlwOUQnUUvM",
+      "exploit_types": [
+        "Remote code execution (RCE)",
+        "Zombie agent / C2",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "OpenHands"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-028",
+      "date": "2025-08-09",
+      "title": "OpenHands - The Lethal Trifecta Strikes Again: How Prompt Injection Can Leak Access Tokens",
+      "url": "https://embracethered.com/blog/posts/2025/openhands-the-lethal-trifecta-strikes-again/",
+      "video_url": null,
+      "exploit_types": [
+        "Data exfiltration",
+        "Prompt injection (direct)",
+        "Privilege / escalation"
+      ],
+      "ecosystems": [
+        "OpenHands"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-029",
+      "date": "2025-08-08",
+      "title": "Devin AI: The AI Kill Chain in Action: Exposing Ports to the Internet via Prompt Injection",
+      "url": "https://embracethered.com/blog/posts/2025/devin-ai-kill-chain-exposing-ports/",
+      "video_url": null,
+      "exploit_types": [
+        "Remote code execution (RCE)",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Devin AI"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-030",
+      "date": "2025-08-07",
+      "title": "Devin AI: How Devin AI Can Leak Your Secrets via Multiple Means",
+      "url": "https://embracethered.com/blog/posts/2025/devin-can-leak-your-secrets/",
+      "video_url": null,
+      "exploit_types": [
+        "Data exfiltration",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Devin AI"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-031",
+      "date": "2025-08-06",
+      "title": "Devin AI: I Spent $500 To Test Devin For Prompt Injection So That You Don't Have To",
+      "url": "https://embracethered.com/blog/posts/2025/devin-i-spent-usd500-to-hack-devin/",
+      "video_url": null,
+      "exploit_types": [
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Devin AI"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-032",
+      "date": "2025-08-05",
+      "title": "Amp Code: Arbitrary Command Execution via Prompt Injection",
+      "url": "https://embracethered.com/blog/posts/2025/amp-agents-that-modify-system-configuration-and-escape/",
+      "video_url": "https://youtu.be/t3xp0rtrcOw",
+      "exploit_types": [
+        "Remote code execution (RCE)",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Amp Code / Sourcegraph"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-033",
+      "date": "2025-08-04",
+      "title": "Cursor: Arbitrary Data Exfiltration via Mermaid",
+      "url": "https://embracethered.com/blog/posts/2025/cursor-data-exfiltration-with-mermaid/",
+      "video_url": "https://youtu.be/jXYljqOvwyY",
+      "exploit_types": [
+        "Data exfiltration",
+        "Path / access control"
+      ],
+      "ecosystems": [
+        "Cursor"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-034",
+      "date": "2025-08-03",
+      "title": "Anthropic Filesystem MCP Server: Directory Access Bypass Via Improper Path Validation",
+      "url": "https://embracethered.com/blog/posts/2025/anthropic-filesystem-mcp-server-bypass/",
+      "video_url": "https://youtu.be/wqjLqO40org",
+      "exploit_types": [
+        "Path / access control"
+      ],
+      "ecosystems": [
+        "Anthropic"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-035",
+      "date": "2025-08-02",
+      "title": "ChatGPT Codex: Turning ChatGPT Codex Into a ZombAI Agent",
+      "url": "https://embracethered.com/blog/posts/2025/chatgpt-codex-remote-control-zombai/",
+      "video_url": "https://youtu.be/KIJZPDCjqis",
+      "exploit_types": [
+        "Zombie agent / C2",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    },
+    {
+      "id": "ETR-036",
+      "date": "2025-08-01",
+      "title": "ChatGPT: Exfiltrating Your Chat History and Memories With Prompt Injection",
+      "url": "https://embracethered.com/blog/posts/2025/chatgpt-chat-history-data-exfiltration/",
+      "video_url": "https://youtu.be/0xixzlILeNg",
+      "exploit_types": [
+        "Data exfiltration",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "source": "month_of_ai_bugs_2025"
+    }
+  ]
+}

