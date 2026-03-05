@@ -1,0 +1,16 @@
+{
+  "name": "agent_autopsy",
+  "version": "1.0.0",
+  "description": "Catalog and analysis of agentic AI security research from [Embrace The Red](https://embracethered.com/blog/) (wunderwuzzi). Each write-up is indexed by **exploit type** (primary) and **ecosystem** (secondary). Per-post extraction captures: vulnerability, research method, and exploit process.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "validate:mermaid": "node scripts/validate_mermaid.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mermaid": "^11.12.3"
+  }
+}
