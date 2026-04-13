@@ -44,14 +44,14 @@ Phase 2 extractions cover the **top 50 posts by most recent date** (ETR-001–05
 
 ## Lessons
 
-20 narrative lessons currently exist, covering a mix of recent high-signal posts (ETR-001–007, ETR-032–036) and foundational/introductory posts (ETR-096–105). Each lesson follows a shared format:
+30 narrative lessons currently exist, covering recent high-signal posts (ETR-001–015, ETR-032–036) and foundational/introductory posts (ETR-096–105). Each lesson follows a shared format:
 
 - **In one sentence:** one-line takeaway
 - **Overview**
 - **Core Technologies and Architecture** (Mermaid diagram + text)
 - **Core Concepts** (optional third diagram)
 - **Exploit Mechanism** (Mermaid diagram, step table, numbered walkthrough, optional `<details>`)
-- **Security** and **Summary**
+- **Security**, **Summary**, and **References**
 
 Run `npm run validate:mermaid` to verify all Mermaid syntax before committing.
 
