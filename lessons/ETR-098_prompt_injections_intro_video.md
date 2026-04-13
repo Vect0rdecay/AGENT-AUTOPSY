@@ -106,3 +106,10 @@ The prerequisite is that the app (a) includes untrusted data in the prompt and (
 ## Summary
 
 The video introduces prompt engineering and prompt injections and stresses that (1) many real-world prompt engineering setups are vulnerable, (2) indirect injections (untrusted data in the prompt) are especially dangerous, (3) payloads are natural language and bypass input validation and WAFs, and (4) the LLM can be used to produce JSON, HTML, URLs, or other payloads that the application then misuses. Understanding the stack (how the prompt is built, how the model is called, how the output is consumed) and the integration (where untrusted data enters, where output is trusted) lets you see why these attacks work and where to defend: at the boundaries of the prompt and at every use of the model’s response.
+
+---
+
+## References
+
+- [Video: Prompt Injections - An Introduction](https://embracethered.com/blog/posts/2023/prompt-injection-an-introduction-video/) (source post, includes link to Colab lab and YouTube walkthrough)
+- [Adversarial Prompting: Tutorial and Lab](https://embracethered.com/blog/posts/2023/adversarial-prompting-tutorial-and-lab/) (companion Embrace The Red post: ETR-097)

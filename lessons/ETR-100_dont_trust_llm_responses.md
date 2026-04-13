@@ -113,3 +113,10 @@ The prerequisite is that the application or the chat platform trusts the model o
 ## Summary
 
 The post teaches that LLM responses must not be trusted and that the context where the response is used (web, SQL, shell, chat commands, link unfurling) determines the attack. Data exfiltration via hyperlink auto-retrieval is a concrete example: if the model outputs a URL and the chat app fetches it, the attacker’s server can receive data. Custom commands and mentions in bot output can escalate privileges. As an AI security engineer, you should treat every use of model output as a potential injection point and apply the same defenses (sanitization, validation, least privilege, human in the loop for risky actions) that you would for any untrusted input.
+
+---
+
+## References
+
+- [Don't blindly trust LLM responses. Threats to chatbots.](https://embracethered.com/blog/posts/2023/ai-injections-threats-context-matters/) (source post)
+- [AI Injections: Direct and Indirect Prompt Injections](https://embracethered.com/blog/posts/2023/ai-injections-direct-and-indirect-prompt-injection-basics/) (companion Embrace The Red post: ETR-101)

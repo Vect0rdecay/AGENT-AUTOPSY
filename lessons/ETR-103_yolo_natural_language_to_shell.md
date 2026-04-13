@@ -111,3 +111,10 @@ So the vulnerability is the design: natural language in, command out, then execu
 ## Summary
 
 Yolo is a neat example of using an LLM to turn natural language into shell commands. The security takeaway is that any such pipeline that then executes the output creates an RCE vector when the input is attacker-controlled or attacker-influenced. As an AI security engineer, you should treat "NL to command/code + execute" as a high-risk pattern and enforce boundaries (no auto-execution, sandboxing, or strong allowlists) rather than relying on the model to refuse malicious requests.
+
+---
+
+## References
+
+- [Yolo: Natural Language to Shell Commands with ChatGPT API](https://embracethered.com/blog/posts/2023/yolo-natural-language-to-bash-command-with-chatgpt-api/) (source post)
+- [wunderwuzzi23/yolo on GitHub](https://github.com/wunderwuzzi23/yolo) (source code for the yolo tool)

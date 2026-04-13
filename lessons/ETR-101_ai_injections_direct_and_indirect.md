@@ -149,3 +149,10 @@ The blog post’s own hidden payload demonstrated step 1–4: readers could poin
 ## Summary
 
 The post defines AI prompt injection (direct and indirect), compares it to SQL injection and XSS, and demonstrates indirect injection by hiding instructions in the post itself that Bing Chat followed when asked to analyze the page. Direct injection is when the user’s (or attacker’s) message contains the instructions. Indirect injection is when instructions are planted in external data (web, document, plugin) that the system later feeds into the prompt. Because the model interprets natural language and does not separate "code" from "data," prompt injection is hard to fix with input filtering alone; security relies on design, context boundaries, and detection. As an AI security engineer, you should treat prompt injection as a first-class threat and design systems assuming that any prompt content can be malicious.
+
+---
+
+## References
+
+- [AI Injections: Direct and Indirect Prompt Injections and Their Implications](https://embracethered.com/blog/posts/2023/ai-injections-direct-and-indirect-prompt-injection-basics/) (source post)
+- [Don't blindly trust LLM responses](https://embracethered.com/blog/posts/2023/ai-injections-threats-context-matters/) (companion Embrace The Red post: ETR-100)

@@ -113,3 +113,10 @@ Prerequisites: The app (a) builds the prompt from user or external data and (b) 
 ## Summary
 
 The post introduces an adversarial prompting tutorial and lab in Colab: from simple prompt engineering to JSON injection, HTML/XSS, order/recipient overwrite, and data exfiltration. The core idea is that attack payloads are natural language (bypassing input validation) and that the LLM can be instructed to output the exact JSON, HTML, or text that the application then misuses. Understanding how the application builds the prompt and consumes the output (parsing, rendering, API calls) lets you see where the trust boundary must be: never trust model output in a sensitive context without validation. Use the lab to generate adversarial examples and to test your own integrations.
+
+---
+
+## References
+
+- [Adversarial Prompting: Tutorial and Lab](https://embracethered.com/blog/posts/2023/adversarial-prompting-tutorial-and-lab/) (source post, includes link to Colab notebook)
+- [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) (OWASP: LLM injection and related risks)

@@ -101,3 +101,10 @@ Red teaming for AI apps includes: (1) prompt injection (direct and indirect) to 
 ## Summary
 
 The post links to a podcast on AI red teaming and threat modeling ML systems. The lesson here is that threat modeling should cover the full data flow (inputs to the prompt, prompt construction, model call, uses of output) and that red teaming should be goal-based (exfiltrate, escalate, bypass). Understanding where LLM apps sit in the stack (web backend, APIs, plugins, output consumers) lets you apply the same rigor you would to any other application, with the added twist that both "input" and "output" of the model are attacker-influenced and must be treated as untrusted at the boundaries where they touch the rest of the system.
+
+---
+
+## References
+
+- [MLSecOps Podcast: AI Red Teaming and Threat Modeling Machine Learning Systems](https://embracethered.com/blog/posts/2023/mlsecops-podcast-ai-red-teaming/) (source post, links to podcast episode)
+- [MLSecOps Community](https://mlsecops.com/) (MLSecOps: podcast and community context)

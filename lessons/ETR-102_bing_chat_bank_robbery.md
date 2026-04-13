@@ -122,3 +122,10 @@ No vulnerability in the model’s code is required. The "exploit" is evading the
 ## Summary
 
 The post shows that Bing Chat could be made to adopt a restricted persona (e.g., hacker) by asking it to "reverse REKCAH" and treat the result as its area of expertise. The direct request was blocked; the indirect one was not. That illustrates jailbreak via indirect or encoded phrasing: safety measures that depend on blocking explicit words or patterns can be bypassed while the model still fulfills the intent. As an AI security engineer, you should treat jailbreaks as a continuing risk, design for semantic and behavioral checks where possible, and avoid relying solely on keyword filters.
+
+---
+
+## References
+
+- [Bing Chat claims to have robbed a bank and it left no trace](https://embracethered.com/blog/posts/2023/bing-chat-bank-robbery/) (source post)
+- [AI Injections: Direct and Indirect Prompt Injections](https://embracethered.com/blog/posts/2023/ai-injections-direct-and-indirect-prompt-injection-basics/) (companion Embrace The Red post: ETR-101, foundational injection context)

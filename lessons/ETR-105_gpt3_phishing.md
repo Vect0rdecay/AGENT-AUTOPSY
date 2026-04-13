@@ -134,3 +134,10 @@ There is no exploitation of a flaw in the model. The "exploit" is the pipeline: 
 ## Summary
 
 The post demonstrates that GPT-3 can produce a coherent, persuasive article about its own misuse. That illustrates a core idea: LLMs are powerful content generators that can be directed toward phishing and other social engineering. There is no patch for "don’t generate phishing text," because the same capability is general-purpose. Your job as an AI security engineer is to understand this abuse vector, design defenses (user education, filtering, detection of generated content where appropriate), and include it in threat models alongside vulnerabilities in how systems integrate and trust LLMs.
+
+---
+
+## References
+
+- [GPT-3 and Phishing Attacks](https://embracethered.com/blog/posts/2022/gpt-3-ai-and-phishing-attacks/) (source post)
+- [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) (OWASP: LLM abuse and misuse risks)

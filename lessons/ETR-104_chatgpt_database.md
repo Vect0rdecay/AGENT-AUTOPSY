@@ -131,3 +131,10 @@ So the vulnerability is not in ChatGPT per se; it is in how applications use mod
 ## Summary
 
 The author showed that ChatGPT can be turned into a plausible "SQL Server" with one prompt and then fed T-SQL-style commands that it "executes" in simulation. That teaches two things: (1) direct prompt injection (user text redefining the model’s role and behavior) and (2) the risk of simulation when the next step is execution. As an AI security engineer, you should treat "imagine you are X" as a standard test case and ensure that systems that use LLMs do not blindly trust or execute output that looks like commands or system responses.
+
+---
+
+## References
+
+- [ChatGPT: Imagine you are a database server](https://embracethered.com/blog/posts/2022/chatgpt-imagine-you-are-a-database/) (source post)
+- [AI Injections: Direct and Indirect Prompt Injections](https://embracethered.com/blog/posts/2023/ai-injections-direct-and-indirect-prompt-injection-basics/) (companion Embrace The Red post: ETR-101, direct injection foundational context)
