@@ -53,8 +53,6 @@ Phase 2 extractions cover the **top 50 posts by most recent date** (ETR-001–05
 - **Exploit Mechanism** (Mermaid diagram, step table, numbered walkthrough, optional `<details>`)
 - **Security**, **Summary**, and **References**
 
-Run `npm run validate:mermaid` to verify all Mermaid syntax before committing.
-
 ## Status
 
 | Phase | Status |
@@ -65,4 +63,4 @@ Run `npm run validate:mermaid` to verify all Mermaid syntax before committing.
 
 ## Attribution
 
-All source material is from [Embrace The Red](https://embracethered.com/blog/) (Johann Reberger / wunderwuzzi). This project is for research and educational reference; attribution is retained in all outputs.
+The original research, exploits, and findings documented here are the work of [Johann Reberger (wunderwuzzi)](https://embracethered.com/blog/). Each lesson is grounded in his published posts and retains full attribution to the source material. The lessons extend the originals with additional technical context, architectural diagrams, step-by-step exploit breakdowns, and supplementary references drawn from other public sources, which are cited inline. This project is for research and educational reference only.
