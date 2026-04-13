@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Internal planning and curriculum files not intended for public release
+EMBRACE_THE_RED_ANALYSIS_PLAN.md
+lessons/TOP10_WEB_HACKING_2025_TEACHING_PLAN.md
+
+# OS / editor artifacts
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Internal maintenance scripts
+scripts/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.Python
