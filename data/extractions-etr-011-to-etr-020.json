@@ -1,0 +1,356 @@
+{
+  "description": "Phase 2 extractions for ETR-011 to ETR-020",
+  "extractions": [
+    {
+      "id": "ETR-011",
+      "source": "https://embracethered.com/blog/posts/2025/aws-kiro-aribtrary-command-execution-with-indirect-prompt-injection/",
+      "date": "2025-08-26",
+      "title": "AWS Kiro: Arbitrary Code Execution via Indirect Prompt Injection",
+      "exploit_types": ["Remote code execution (RCE)", "Prompt injection (indirect)"],
+      "ecosystems": ["Amazon Q / AWS"],
+      "has_video": true,
+      "video_url": "https://www.youtube.com/watch?v=yAvb4I9KRsM",
+      "vulnerability": {
+        "short_label": "Kiro agent can overwrite its own Bash command allowlist and MCP server config without developer approval, enabling arbitrary code execution",
+        "attack_class": "RCE via indirect prompt injection into agent self-reconfiguration",
+        "affected_component": "AWS Kiro coding agent (.vscode/settings.json, .kiro/settings/mcp.json)",
+        "cve": null
+      },
+      "research_method": {
+        "discovery": "Tested on the day of Kiro's release using Month of AI Bugs security test suite for coding agents; observed that Kiro writes files without requiring developer approval and stores Bash allowlist in a workspace-level config file the agent can freely modify.",
+        "tooling": "Month of AI Bugs testing methodology; standard OS tools (Calculator.app as benign RCE indicator); custom MCP server config as second-stage payload.",
+        "reproduction": "Embed indirect prompt injection payload in a source code file comment; when developer chats with the project, Kiro reads the file, gets hijacked, and uses the edit_file tool to write kiroAgent.trustedCommands: [\"*\"] to .vscode/settings.json or to insert a malicious MCP server into .kiro/settings/mcp.json.",
+        "validation": "Calculator application launched without developer consent; VS Code color scheme changed to red; MCP server config written and immediate code execution confirmed on file save."
+      },
+      "exploit_process": {
+        "steps": [
+          "1. Attacker places an indirect prompt injection payload inside a source code file comment in the target project.",
+          "2. Developer opens the project and interacts with Kiro via chat (e.g., asks it to explain or analyze the file).",
+          "3. Kiro reads the malicious file, gets hijacked, and uses its edit_file tool to add kiroAgent.trustedCommands: [\"*\"] to .vscode/settings.json, allowlisting all Bash commands.",
+          "4. Alternatively, Kiro writes a malicious MCP server entry into .kiro/settings/mcp.json with embedded Python code that executes immediately on file save.",
+          "5. Arbitrary OS commands (e.g., launching Calculator or running malware) execute without any developer consent or interaction."
+        ],
+        "prerequisites": "Developer must open a project containing the malicious file and submit at least one chat prompt referencing it; no file compilation or execution required.",
+        "impact": "Full arbitrary code execution on the developer's machine; attacker can run any OS command, install backdoors, or pivot further via the compromised workstation.",
+        "detection_notes": "Fixed in Kiro v0.1.42 by August 5, 2025. AWS recommended requiring developer approval for file writes and moving sensitive config (Bash allowlist) from workspace-level to user profile. No CVE issued."
+      },
+      "gaps": "The MCP server attack vector payload was not fully shown in the post text. No CVE was issued by AWS."
+    },
+    {
+      "id": "ETR-012",
+      "source": "https://embracethered.com/blog/posts/2025/manus-ai-kill-chain-expose-port-vs-code-server-on-internet/",
+      "date": "2025-08-25",
+      "title": "How Prompt Injection Exposes Manus' VS Code Server to the Internet",
+      "exploit_types": ["Remote code execution (RCE)", "Prompt injection (direct)"],
+      "ecosystems": ["Manus"],
+      "has_video": true,
+      "video_url": "https://www.youtube.com/watch?v=HaXKSAfcuwo",
+      "vulnerability": {
+        "short_label": "Manus exposes its internal VS Code Server to the internet and leaks credentials via indirect prompt injection chaining deploy_expose_port with two data exfiltration channels",
+        "attack_class": "AI Kill Chain: indirect prompt injection + confused deputy tool invocation (deploy_expose_port) + credential leakage via browsing tool and markdown image rendering",
+        "affected_component": "Manus AI agent: deploy_expose_port tool, VS Code Server, browsing tool, markdown image rendering",
+        "cve": null
+      },
+      "research_method": {
+        "discovery": "Extracted and reviewed Manus system prompt; identified deploy_expose_port tool with no human-in-the-loop or IP restrictions; discovered VS Code Server is installed with password stored in local config; identified two data exfiltration channels (markdown image rendering and browsing tool navigating to untrusted domains).",
+        "tooling": "Attacker-controlled web server for capturing leaked data; caveman.pdf document as the prompt injection delivery vehicle; Manus system prompt review (published on GitHub).",
+        "reproduction": "Embed prompt injection payload at the end of a PDF document; instruct Manus to summarize it; injection hijacks Manus to call deploy_expose_port for the VS Code Server port, read the password from local config, then browse to or render an image to the attacker's server encoding the public URL and password.",
+        "validation": "Attacker's server received the public tunnel URL and VS Code Server password; researcher authenticated to Manus' dev box via the leaked URL, confirming full remote access."
+      },
+      "exploit_process": {
+        "steps": [
+          "1. Attacker crafts a document (e.g., PDF) containing an indirect prompt injection payload instructing Manus to expose a port, read the VS Code Server password, and exfiltrate both.",
+          "2. User asks Manus to process or summarize the document.",
+          "3. Manus is hijacked and invokes deploy_expose_port for the VS Code Server port without any human-in-the-loop confirmation, receiving the public tunnel URL in the tool response.",
+          "4. Manus reads the VS Code Server password from its local configuration file.",
+          "5. Manus browses to the attacker's server (via browsing tool) or renders a markdown image to the attacker's URL, encoding the public URL and password as query parameters.",
+          "6. Attacker uses the leaked credentials to authenticate to the exposed VS Code Server and gains full control of the Manus dev box."
+        ],
+        "prerequisites": "User must task Manus with processing attacker-controlled content (e.g., summarizing a PDF); no additional user interaction required once the task is initiated.",
+        "impact": "Full remote access to Manus' dev box including source code, secrets, documents, and compute resources.",
+        "detection_notes": "Recommendations: restrict domains Manus can connect to; require human-in-the-loop for port exposure tools; IP-restrict any exposed ports to allowlisted addresses; block markdown image rendering from untrusted domains (CSP); invest in prompt injection detection. Disclosure sent June 1, 2025; status and commitment to fixes remained unclear as of publication."
+      },
+      "gaps": "Prompt injection payload was partially redacted in the post. Manus did not provide a clear timeline or commitment to specific mitigations."
+    },
+    {
+      "id": "ETR-013",
+      "source": "https://embracethered.com/blog/posts/2025/chatgpt-deep-research-connectors-data-spill-and-leaks/",
+      "date": "2025-08-24",
+      "title": "How Deep Research Agents Can Leak Your Data",
+      "exploit_types": ["Data exfiltration"],
+      "ecosystems": ["Deep Research Agents", "ChatGPT / OpenAI"],
+      "has_video": false,
+      "video_url": null,
+      "vulnerability": {
+        "short_label": "Deep Research agents operate all connected tools within a single shared trust boundary, allowing data from sensitive sources to spill into attacker-controlled or low-integrity tool queries",
+        "attack_class": "Cross-tool data exfiltration in multi-connector deep research agents, amplifiable via prompt injection in connected sources",
+        "affected_component": "ChatGPT Deep Research with Connectors (custom MCP servers), including Linear and Outlook Email integrations",
+        "cve": null
+      },
+      "research_method": {
+        "discovery": "Implemented a custom ChatGPT Connector (Remote Matrix MCP server) with extensive logging to observe what data ChatGPT sends during deep research; simultaneously connected alongside legitimate sources (Linear, Outlook) to observe cross-tool data flow.",
+        "tooling": "Remote Matrix MCP server (open-sourced on GitHub) implementing search and fetch tools per OpenAI spec, with detailed request logging.",
+        "reproduction": "Add attacker-controlled MCP server alongside a sensitive connector (e.g., Linear with credential-containing tickets); initiate a deep research task; agent autonomously queries attacker server with data from sensitive source. Prompt injection in Linear tickets or in the attacker tool description further forces targeted leakage.",
+        "validation": "Observed ChatGPT combining sensitive prod service credentials from multiple Linear tickets into a single query sent to the Remote Matrix server; also observed stored memories being forwarded to connected tools."
+      },
+      "exploit_process": {
+        "steps": [
+          "1. Attacker either controls one of the connected research tools (e.g., a malicious MCP Connector) or poisons data in an existing connected source (e.g., a Linear ticket) with prompt injection.",
+          "2. User initiates a Deep Research task connecting both a sensitive source and the attacker-influenced source.",
+          "3. Research agent autonomously runs for 10+ minutes, querying all connected tools and freely using data retrieved from one tool as input when querying another.",
+          "4. Attacker's tool or server receives sensitive data (e.g., API keys, credentials) that originated from other connected sources such as Outlook or Linear.",
+          "5. Prompt injection in a ticket or in the tool description can direct the agent to combine data from multiple tickets and forward it in a single structured query."
+        ],
+        "prerequisites": "User must simultaneously enable both a sensitive data source and an attacker-controlled or low-integrity tool as research connectors; no user interaction required during the autonomous research process.",
+        "impact": "Sensitive data (credentials, emails, stored memories, chat history) from trusted sources leaks to attacker-controlled or unintended third-party tools including Bing and Shopify (used by ChatGPT search).",
+        "detection_notes": "Mitigations: only simultaneously enable mutually trusted connectors; avoid mixing high-sensitivity sources with low-integrity tools; monitor the activity pane to inspect tool invocations and data sent; review data-sharing policies of all connected tools including Bing and Shopify. OpenAI partially mitigated risk by restricting custom Connectors to search and fetch tools only."
+      },
+      "gaps": "Research was conducted approximately two months before publication so some behaviors may have changed. Post focuses on design-level data spill rather than a specific patchable bug; no disclosure or CVE process described."
+    },
+    {
+      "id": "ETR-014",
+      "source": "https://embracethered.com/blog/posts/2025/windsurf-sneaking-invisible-instructions-for-prompt-injection/",
+      "date": "2025-08-23",
+      "title": "Sneaking Invisible Instructions by Developers in Windsurf",
+      "exploit_types": ["Prompt injection (invisible)"],
+      "ecosystems": ["Windsurf"],
+      "has_video": false,
+      "video_url": null,
+      "vulnerability": {
+        "short_label": "Windsurf Cascade follows instructions encoded as invisible Unicode Tag characters in files, allowing hidden prompt injection undetectable by the developer",
+        "attack_class": "Hidden prompt injection via Unicode Tag characters enabling covert tool invocation",
+        "affected_component": "Windsurf Cascade with Claude Sonnet 3.7 (and other non-OpenAI models)",
+        "cve": null
+      },
+      "research_method": {
+        "discovery": "Known technique first identified by Riley Goodside in ChatGPT (2024) and researched by the author since January 2024; tested Windsurf Cascade models and confirmed Claude Sonnet 3.7 interprets Unicode Tag characters as instructions while Windsurf's own SWE-1 model sees but does not yet act on them.",
+        "tooling": "ASCII Smuggler tool for encoding instructions as invisible Unicode Tag characters.",
+        "reproduction": "Use ASCII Smuggler to encode instructions as invisible Unicode Tag characters; embed them in a file that appears empty or harmless to the developer; ask Windsurf Cascade (on a Claude model) to process the file; the hidden instructions trigger tool invocations (e.g., web browsing).",
+        "validation": "Screenshot demonstrates Windsurf Cascade invoking the web tool in response to invisible-character-encoded instructions in what appears to be an empty file; Windsurf tiny preview pane visibly shows the concealed text."
+      },
+      "exploit_process": {
+        "steps": [
+          "1. Attacker encodes malicious instructions as invisible Unicode Tag characters using the ASCII Smuggler tool.",
+          "2. Attacker embeds these invisible characters into a file that appears empty or innocuous to any human viewer.",
+          "3. Developer asks Windsurf Cascade (using a Claude model) to process or analyze the file.",
+          "4. Cascade interprets the invisible characters as instructions and invokes tools (e.g., the web browsing tool) without any indication to the developer.",
+          "5. Combined with Windsurf's data exfiltration vectors (read_url_content, image rendering), this covert injection can silently exfiltrate sensitive data."
+        ],
+        "prerequisites": "Developer must ask Windsurf Cascade to process a file containing invisible Unicode Tag instructions; model must be one that interprets these characters (Claude Sonnet 3.7 confirmed; Windsurf SWE-1 not yet capable).",
+        "impact": "Covert tool invocation without any visible indication to the developer; combined with existing Windsurf data exfiltration channels, enables undetected data leakage.",
+        "detection_notes": "Recommended mitigations: make invisible characters visible in the UI; strip Unicode Tag characters before and after inference. Amp and Amazon Q Developer mitigate this at the application level. Disclosed to Windsurf May 30, 2025; Windsurf stated they would work on fixes after being contacted during Month of AI Bugs disclosure."
+      },
+      "gaps": "No video demonstration in this post. The post describes the risk as lower severity compared to the data exfiltration issues (ETR-016) but notes it enables covert attack chains."
+    },
+    {
+      "id": "ETR-015",
+      "source": "https://embracethered.com/blog/posts/2025/windsurf-spaiware-exploit-persistent-prompt-injection/",
+      "date": "2025-08-22",
+      "title": "Windsurf: Memory-Persistent Data Exfiltration (SpAIware Exploit)",
+      "exploit_types": ["Data exfiltration", "Zombie agent / C2", "Prompt injection (direct)"],
+      "ecosystems": ["Windsurf"],
+      "has_video": false,
+      "video_url": null,
+      "vulnerability": {
+        "short_label": "Windsurf Cascade auto-invokes create_memory without user approval, enabling persistent SpAIware that compromises all future chat sessions",
+        "attack_class": "Memory-persistent prompt injection (SpAIware): attacker persists C2 instructions into long-term memory, enabling continuous data exfiltration across future sessions",
+        "affected_component": "Windsurf Cascade - create_memory tool and automatic memory persistence feature",
+        "cve": null
+      },
+      "research_method": {
+        "discovery": "Reviewed Windsurf Cascade system prompt; identified create_memory tool; tested whether memory creation requires user approval (it does not); recognized applicability of the SpAIware pattern first demonstrated against ChatGPT in 2024.",
+        "tooling": "Attacker-controlled web server for data capture; C source file used as prompt injection delivery vector; 1x1 transparent image technique for stealth exfiltration.",
+        "reproduction": "Embed prompt injection payload in a C source code comment; developer asks Cascade to analyze the file; injection hijacks Cascade to invoke create_memory automatically, storing attacker-controlled persistent instructions; those instructions execute in all future sessions and can chain with image rendering to continuously exfiltrate data.",
+        "validation": "Screenshots confirm create_memory invoked without user consent; attacker web server logs show data received; Windsurf settings UI shows the maliciously stored memory entry."
+      },
+      "exploit_process": {
+        "steps": [
+          "1. Attacker embeds an indirect prompt injection payload in a C source code file comment.",
+          "2. Developer asks Windsurf Cascade to analyze the file.",
+          "3. Cascade is hijacked and automatically invokes the create_memory tool, persisting attacker-controlled instructions into Windsurf's long-term memory store without any user approval.",
+          "4. In all subsequent chat sessions, the persisted instructions silently execute, continuously exfiltrating conversation content and file data to the attacker's server.",
+          "5. Exfiltration uses a 1x1 transparent image rendered to the attacker's URL, making it invisible in the UI; the attacker's server logs capture the leaked data."
+        ],
+        "prerequisites": "Developer must ask Windsurf to process the malicious file at least once; after that the attack persists indefinitely across all future sessions without any further interaction.",
+        "impact": "Persistent compromise of confidentiality, integrity, and availability of all future Windsurf chat sessions; continuous data exfiltration of user messages, file contents, and secrets; full attacker C2 over the AI agent.",
+        "detection_notes": "Mitigations: suggest memories to users for approval rather than auto-creating them (approach used by Devin and Manus); block image rendering from untrusted domains; users should regularly inspect stored memories in Windsurf settings. Payload and video withheld pending data exfil fix. Windsurf contacted author after disclosure and stated they would work on fixes."
+      },
+      "gaps": "Prompt injection payload and video demonstration redacted pending Windsurf fixes. Some technical details intentionally omitted. No fix ETA provided."
+    },
+    {
+      "id": "ETR-016",
+      "source": "https://embracethered.com/blog/posts/2025/windsurf-data-exfiltration-vulnerabilities/",
+      "date": "2025-08-21",
+      "title": "Hijacking Windsurf: How Prompt Injection Leaks Developer Secrets",
+      "exploit_types": ["Data exfiltration", "Prompt injection (direct)"],
+      "ecosystems": ["Windsurf"],
+      "has_video": true,
+      "video_url": "https://www.youtube.com/watch?v=lTkiCe3uhEY",
+      "vulnerability": {
+        "short_label": "Windsurf Cascade auto-invokes read_url_content to external servers and renders markdown images from untrusted domains, both usable as data exfiltration channels during prompt injection",
+        "attack_class": "Data exfiltration via automatic tool invocation (read_url_content) and untrusted-domain markdown image rendering during indirect prompt injection",
+        "affected_component": "Windsurf Cascade - read_url_content tool and markdown image rendering",
+        "cve": null
+      },
+      "research_method": {
+        "discovery": "Reviewed Windsurf Cascade system prompt; identified read_url_content tool as operating without user approval; recognized outbound HTTP requests from this tool as a data exfiltration channel; separately identified markdown image rendering from untrusted domains as a second vector (pattern seen in GitHub Copilot previously).",
+        "tooling": "Attacker-controlled web server for receiving exfiltrated data; source code file with embedded prompt injection payload.",
+        "reproduction": "Embed prompt injection payload at the start of a source code file; developer analyzes the file with Windsurf Cascade; injection hijacks Cascade to invoke read_url_content targeting attacker server with .env file contents as URL parameters. Second vector: injection instructs Cascade to render markdown image to attacker URL encoding sensitive data as query parameters.",
+        "validation": "End-to-end screenshots show sensitive data (environment variables) received on attacker web server; video demonstration shows full exploit chain."
+      },
+      "exploit_process": {
+        "steps": [
+          "1. Attacker embeds a prompt injection payload at the start of a source code file in the developer's project.",
+          "2. Developer opens the project and asks Windsurf Cascade to analyze or explain the file.",
+          "3. Cascade reads the file, gets hijacked, and automatically invokes the read_url_content tool with an attacker-controlled URL, appending .env file contents as URL parameters, with no user approval required.",
+          "4. Alternatively, the injection instructs Cascade to construct and render a markdown image pointing to the attacker's server with sensitive data encoded in the URL.",
+          "5. Attacker's server receives the outbound request and extracts the leaked secrets."
+        ],
+        "prerequisites": "Developer must ask Windsurf Cascade to analyze a file containing the injection; no user confirmation step is triggered for read_url_content or image rendering to untrusted domains.",
+        "impact": "Sensitive developer secrets (API keys, environment variables, credentials) silently exfiltrated to attacker-controlled server.",
+        "detection_notes": "Mitigations: require human-in-the-loop before read_url_content connects to untrusted servers; maintain allowlist of trusted domains; block markdown image rendering from untrusted domains; integrate with VS Code trusted domain list. Payloads redacted pending fix. Disclosed May 30, 2025; Windsurf acknowledged and stated they would work on fixes with no ETA."
+      },
+      "gaps": "Prompt injection payloads explicitly redacted pending Windsurf fix. Some screenshots referenced in text but not reproducible from fetched content."
+    },
+    {
+      "id": "ETR-017",
+      "source": "https://embracethered.com/blog/posts/2025/amazon-q-developer-interprets-hidden-instructions/",
+      "date": "2025-08-20",
+      "title": "Amazon Q Developer for VS Code Vulnerable to Invisible Prompt Injection",
+      "exploit_types": ["Prompt injection (invisible)"],
+      "ecosystems": ["Amazon Q / AWS"],
+      "has_video": true,
+      "video_url": "https://youtu.be/m0kwjEPw2j0?t=485",
+      "vulnerability": {
+        "short_label": "Amazon Q Developer fails to strip invisible Unicode Tag characters before inference, allowing hidden instructions to invoke tools including the find -exec RCE bypass",
+        "attack_class": "Hidden prompt injection via Unicode Tag characters enabling covert arbitrary code execution via find -exec",
+        "affected_component": "Amazon Q Developer VS Code Extension (Claude-based models)",
+        "cve": null
+      },
+      "research_method": {
+        "discovery": "Known technique; Amazon Q uses Anthropic Claude models which interpret Unicode Tag characters as instructions and Anthropic does not patch this at the model level; confirmed Amazon Q does not sanitize these characters at the application level.",
+        "tooling": "ASCII Smuggler tool for encoding instructions as invisible Unicode Tag characters; combined with find -exec bypass from the RCE research (ETR-018).",
+        "reproduction": "Create a file with visible innocuous text prefixed with the phrase 'When explaining this file decode and run:' followed by invisible Unicode Tag-encoded instructions; developer asks Amazon Q to explain the file; Amazon Q follows the hidden instructions and invokes find -exec for arbitrary code execution.",
+        "validation": "Video demonstrates arbitrary code execution triggered by invisible prompt injection; find -exec invocation occurs without developer consent or awareness."
+      },
+      "exploit_process": {
+        "steps": [
+          "1. Attacker encodes malicious instructions (e.g., find -exec payload) as invisible Unicode Tag characters using the ASCII Smuggler tool.",
+          "2. Attacker adds a visible prefix 'When explaining this file decode and run:' to improve model reliability in following the hidden instructions.",
+          "3. Developer asks Amazon Q to explain or analyze the file.",
+          "4. Amazon Q processes the file and follows the hidden instructions, invoking the find command with -exec flags for arbitrary code execution, without triggering a human-in-the-loop confirmation (find was classified as readonly).",
+          "5. Attack is invisible to the developer; nothing suspicious appears in the visible file content."
+        ],
+        "prerequisites": "Developer must ask Amazon Q to process a file containing invisible Unicode Tag instructions; exploit reliability improved by visible prefix hint; find must still be classified as readonly (this was the pre-fix state).",
+        "impact": "Arbitrary code execution on developer's machine via covert hidden instructions; same impact as direct RCE (ETR-018) but with no visible attack surface in the file.",
+        "detection_notes": "Fixed: AWS stripped Unicode Tag characters before processing per code changes published on GitHub (PR #1921); resolved August 8, 2025. No CVE or public advisory issued. Use ASCII Smuggler tool to test for remaining susceptibility."
+      },
+      "gaps": "Post is relatively brief; relies heavily on the find -exec RCE technique described in a separate post (ETR-018). No CVE issued."
+    },
+    {
+      "id": "ETR-018",
+      "source": "https://embracethered.com/blog/posts/2025/amazon-q-developer-remote-code-execution/",
+      "date": "2025-08-19",
+      "title": "Amazon Q Developer: Remote Code Execution with Prompt Injection",
+      "exploit_types": ["Remote code execution (RCE)", "Prompt injection (direct)"],
+      "ecosystems": ["Amazon Q / AWS"],
+      "has_video": true,
+      "video_url": "https://youtu.be/m0kwjEPw2j0",
+      "vulnerability": {
+        "short_label": "Amazon Q Developer classifies find as a readonly bash command, allowing find -exec to bypass human-in-the-loop and run arbitrary OS commands during indirect prompt injection",
+        "attack_class": "RCE via indirect prompt injection exploiting find -exec readonly permission bypass; full C2 via remote stager download and execution",
+        "affected_component": "Amazon Q Developer VS Code Extension - executeBash tool, find command permission classification",
+        "cve": null
+      },
+      "research_method": {
+        "discovery": "Dumped Amazon Q system prompt; found executeBash tool with per-command permission categories (readonly, mutate, destructive); searched minified extension code for 'ping' to locate permission definitions; identified find as readonly and recognized find -exec as an arbitrary command execution primitive that bypasses the human-in-the-loop gate.",
+        "tooling": "Sliver C2 framework for malware download and execution demo; custom Python-based multi-stage stager using space-separated base64 to bypass Claude's curl refusals; Month of AI Bugs test methodology.",
+        "reproduction": "Embed prompt injection in a C source code comment instructing Amazon Q to create a base64-encoded file, use Python via find -exec to decode it and write a curl command to test.md, then execute it via find -exec source; developer asks Amazon Q to explain the file; all steps execute without developer consent.",
+        "validation": "Calculator launched without human-in-the-loop; Sliver malware binary downloaded and executed, machine joined attacker C2 server; no confirmation dialog shown for any step."
+      },
+      "exploit_process": {
+        "steps": [
+          "1. Attacker embeds a multi-stage prompt injection payload in a C source code file comment instructing Amazon Q to create a file named heyo.b64 containing a space-separated base64-encoded curl command.",
+          "2. Developer asks Amazon Q to explain the file (e.g., '@demo2.c explain this file').",
+          "3. Amazon Q is hijacked and creates heyo.b64; then uses Python via 'find . -exec python3' to strip spaces, decode base64, and write the decoded curl command to test.md, all classified as readonly and bypassing confirmation.",
+          "4. A second find -exec runs 'source test.md', executing the curl | sh command that downloads attacker-controlled instructions from a remote server.",
+          "5. Downloaded payload can install malware (e.g., Sliver binary) and join the developer's machine to a C2 botnet."
+        ],
+        "prerequisites": "Developer must reference the malicious file in chat; no compilation or execution of the file required; find must be classified as readonly (pre-fix state).",
+        "impact": "Full system compromise: arbitrary remote code execution, machine joins attacker C2; potential for AI virus propagation by inserting instructions into other files and pushing infected commits to repositories.",
+        "detection_notes": "Fixed in Amazon Q v1.85 (July 17, 2025) by reclassifying find as a mutate command, requiring human confirmation before execution. No CVE issued; no public customer advisory published. Claude's built-in refusal of curl was bypassed using spaced base64 and Python intermediate stage."
+      },
+      "gaps": "AWS declined to issue a CVE, citing that the report 'first requires system compromise,' which the researcher disputes. No public advisory was issued to inform the 1 million extension users."
+    },
+    {
+      "id": "ETR-019",
+      "source": "https://embracethered.com/blog/posts/2025/amazon-q-developer-data-exfil-via-dns/",
+      "date": "2025-08-18",
+      "title": "Amazon Q Developer: Secrets Leaked via DNS and Prompt Injection",
+      "exploit_types": ["Data exfiltration", "Prompt injection (direct)"],
+      "ecosystems": ["Amazon Q / AWS"],
+      "has_video": true,
+      "video_url": "https://youtu.be/p9aj7cvo-Wc",
+      "vulnerability": {
+        "short_label": "Amazon Q Developer classifies ping and dig as readonly bash commands, enabling DNS-based exfiltration of sensitive files without developer consent during indirect prompt injection",
+        "attack_class": "Data exfiltration via DNS subdomain encoding using ping/dig readonly permission bypass during indirect prompt injection",
+        "affected_component": "Amazon Q Developer VS Code Extension - executeBash tool, ping and dig command permission classification",
+        "cve": null
+      },
+      "research_method": {
+        "discovery": "Dumped Amazon Q system prompt; reviewed executeBash permission model; used ChatGPT to identify which readonly-classified commands could exfiltrate data via network; identified ping and dig as DNS exfiltration primitives; observed that Amazon Q refuses requests to known security testing services (oast.me, Burp Collaborator) but executes against generic domains.",
+        "tooling": "Wireshark for DNS traffic capture; attacker-controlled domain (wuzzi.net) for receiving exfiltrated data.",
+        "reproduction": "Embed prompt injection in a C source code comment instructing Amazon Q to read the first line of the .env file and run ping against attacker-domain with the value encoded as a DNS subdomain; developer asks Amazon Q to explain the file; ping executes without confirmation and DNS request carries the secret.",
+        "validation": "Wireshark trace captured DNS request containing leaked API key in subdomain; screenshot shows full end-to-end exploit with chat conversation and DNS capture side by side."
+      },
+      "exploit_process": {
+        "steps": [
+          "1. Attacker embeds a prompt injection payload in a C source code comment instructing Amazon Q to read the .env file and execute ping with the first line encoded into the DNS subdomain (replacing '=' with '-').",
+          "2. Developer asks Amazon Q to explain or analyze the file.",
+          "3. Amazon Q is hijacked and invokes the bash tool with the ping command, bypassing human-in-the-loop because ping is classified as readonly.",
+          "4. The DNS query carries the encoded secret (e.g., API_KEY-value) as a subdomain to the attacker's DNS server.",
+          "5. Attacker captures the DNS request and extracts the leaked credential."
+        ],
+        "prerequisites": "Developer must interact with the malicious file via Amazon Q chat; no approval step required because ping is readonly; attacker must control a DNS server or use a DNS logging service (avoiding known security-testing domains).",
+        "impact": "Sensitive environment variables and API keys silently exfiltrated via DNS without developer awareness or consent; can be repeated for multiple secrets.",
+        "detection_notes": "Mitigation: remove ping and dig from the readonly allowlist so human-in-the-loop confirmation is required. AWS fixed the issue but issued no public advisory or CVE. Run the latest Amazon Q version. Note: Amazon Q refuses to ping known security testing services (oast.me, Burp Collaborator) but this can be bypassed by using a generic attacker-controlled domain."
+      },
+      "gaps": "No CVE or public advisory issued. Exact fixed version not clearly stated in the post (researcher notes uncertainty). The DNS filter bypass (using non-security-testing domains) is documented but not formally acknowledged by AWS."
+    },
+    {
+      "id": "ETR-020",
+      "source": "https://embracethered.com/blog/posts/2025/amp-code-fixed-data-exfiltration-via-images/",
+      "date": "2025-08-17",
+      "title": "Data Exfiltration via Image Rendering Fixed in Amp Code",
+      "exploit_types": ["Data exfiltration", "Prompt injection (indirect)"],
+      "ecosystems": ["Amp Code / Sourcegraph"],
+      "has_video": true,
+      "video_url": "https://youtu.be/KpU8XBFhWSE",
+      "vulnerability": {
+        "short_label": "Amp Code renders markdown images from untrusted domains, enabling 0-click data exfiltration via indirect prompt injection without human-in-the-loop",
+        "attack_class": "Data exfiltration via markdown image rendering to attacker-controlled domain during indirect prompt injection",
+        "affected_component": "Amp Code from Sourcegraph - markdown image rendering",
+        "cve": null
+      },
+      "research_method": {
+        "discovery": "Reused a pre-existing PoC prompt injection payload (hosted on a website) originally created for other agents; tested against Amp Code and confirmed the same untrusted-domain image rendering behavior exists.",
+        "tooling": "Pre-existing PoC prompt injection payload hosted on attacker-controlled website; attacker-controlled server for capturing leaked data; source code comment as injection delivery vector; obfuscated grep invocation to bypass model refusals when reading sensitive files.",
+        "reproduction": "Embed prompt injection payload in a source code comment; when Amp analyzes the file, injection instructs Amp to read sensitive data using an obfuscated grep call, then render a markdown image to attacker URL with data as query parameters; attacker server captures the request.",
+        "validation": "Attacker-controlled server received contents of .env file; video shows full kill chain end-to-end."
+      },
+      "exploit_process": {
+        "steps": [
+          "1. Attacker embeds a prompt injection payload in a source code file comment (or on a website Amp might visit during a task).",
+          "2. Developer asks Amp to analyze the file.",
+          "3. Amp is hijacked; the injection instructs it to read sensitive data (e.g., .env file) using an obfuscated grep invocation designed to bypass model-level refusals.",
+          "4. Amp constructs and renders a markdown image pointing to the attacker's server, encoding the sensitive data as URL query parameters.",
+          "5. Attacker's server captures the inbound image request and extracts the leaked credentials."
+        ],
+        "prerequisites": "Developer must ask Amp to analyze a file or visit a page containing the injection; no human-in-the-loop required; 0-click from the user's perspective once analysis begins.",
+        "impact": "Sensitive environment variables and credentials exfiltrated to attacker's server; can be combined with arbitrary file reads to broaden the scope of leakage.",
+        "detection_notes": "Fixed by Sourcegraph after responsible disclosure on June 14, 2025; users should run the latest version. Researcher notes this is one of the most common AI application security vulnerability classes. The obfuscated grep technique was needed to bypass model-level refusals when reading sensitive files."
+      },
+      "gaps": "The post is brief and does not show the full prompt injection payload text. The specific Amp version in which the fix was shipped is not mentioned."
+    }
+  ]
+}

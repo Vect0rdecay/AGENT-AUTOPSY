@@ -1,0 +1,350 @@
+{
+  "description": "Phase 2 extractions for ETR-001 to ETR-010",
+  "extractions": [
+    {
+      "id": "ETR-001",
+      "source": "https://embracethered.com/blog/posts/2026/scary-agent-skills/",
+      "date": "2026-02-11",
+      "title": "Scary Agent Skills: Hidden Unicode Instructions in Skills ...And How To Catch Them",
+      "exploit_types": ["Prompt injection (invisible)"],
+      "ecosystems": ["Other / Multi"],
+      "has_video": false,
+      "video_url": null,
+      "vulnerability": {
+        "short_label": "Invisible Unicode Tag codepoints embedded in Agent Skill SKILL.md files serve as hidden prompt injection instructions that survive human review",
+        "attack_class": "Supply chain backdoor via invisible Unicode prompt injection in Agent Skills files",
+        "affected_component": "Agent Skills ecosystem (Claude Code, OpenAI Codex, Google Gemini CLI, Antigravity)",
+        "cve": null
+      },
+      "research_method": {
+        "discovery": "Researcher surveyed the Skills ecosystem for prompt injection surfaces, identified that the 'name' and 'description' fields load into system prompt context, then experimented with embedding Unicode Tag codepoints into a legitimate OpenAI security-best-practices Skill to see if it would survive human review and be followed by models.",
+        "tooling": "ASCII Smuggler (tool to encode/decode hidden Unicode Tag codepoints); custom scanner 'aid' (https://github.com/wunderwuzzi23/aid) for detecting consecutive Unicode Tag runs in files.",
+        "reproduction": "Modify a SKILL.md file to include invisible Unicode Tag codepoints encoding malicious instructions (e.g., run curl | bash); user installs Skill and invokes it; targeted models (Gemini, Claude, Grok) interpret hidden instructions and execute them.",
+        "validation": "Confirmed agent printed attacker-controlled text ('Trust No AI') and executed Bash command as instructed by the invisible payload; also confirmed GitHub Copilot with Claude 4.5 model followed the hidden instructions."
+      },
+      "exploit_process": {
+        "steps": [
+          "1. Attacker embeds malicious instructions as invisible Unicode Tag codepoints into a legitimate SKILL.md file (e.g., a curated OpenAI Skills entry), leaving visible text unchanged.",
+          "2. Cautious user reviews the Skill's visible text and sees nothing suspicious, then installs it.",
+          "3. User or agent invokes the Skill (via slash command or natural language), loading SKILL.md into the model's context.",
+          "4. Model (Gemini, Claude, Grok, or Copilot with Claude backend) interprets the hidden Unicode Tag instructions and executes them, e.g., printing attacker text and running a remote shell script via curl | bash."
+        ],
+        "prerequisites": "User must install the backdoored Skill; auto-approval for Bash tool improves reliability but is not strictly required; targeted models must be susceptible to Unicode Tag instruction following (Gemini, Claude, Grok confirmed).",
+        "impact": "Arbitrary code execution on the user's machine; potential data exfiltration; persistent capability injection if Skill remains installed.",
+        "detection_notes": "Use ASCII Smuggler or 'aid' scanner to detect consecutive Unicode Tag runs (flagged as 'high'/'critical'); Anthropic added detection and refusals in Claude Code as of 2026-02-10, but mitigation was absent in claude.ai at time of publication; only install Skills from trusted vendors; remove Skills when no longer needed; run agents in sandboxed environments."
+      },
+      "gaps": "Demo video embed not captured in page fetch; exact Bash payload redacted by researcher; reliability of tool invocation via description-field injection was noted as inconsistent and not pursued further."
+    },
+    {
+      "id": "ETR-002",
+      "source": "https://embracethered.com/blog/posts/2026/data-exfiltration-mitigation-paper-by-openai/",
+      "date": "2026-02-04",
+      "title": "OpenAI Explains URL-Based Data Exfiltration Mitigations in New Paper",
+      "exploit_types": ["Data exfiltration", "Other"],
+      "ecosystems": ["ChatGPT / OpenAI"],
+      "has_video": false,
+      "video_url": null,
+      "vulnerability": {
+        "short_label": "URL-based data exfiltration via per-character indexed URL mapping bypasses OpenAI's allow-list mitigation",
+        "attack_class": "Data exfiltration via URL-based encoding channel, bypassing crawl-index allow-list",
+        "affected_component": "ChatGPT web browsing and image loading features",
+        "cve": null
+      },
+      "research_method": {
+        "discovery": "Researcher reviewed OpenAI's published paper 'Preventing URL-Based Data Exfiltration in Language-Model Agents' and cross-referenced it against bypass techniques first described in 2023, finding that the per-character URL mapping bypass remains viable despite the new allow-list mitigation.",
+        "tooling": "No custom tooling described; conceptual analysis of OpenAI's web index approach and the researcher's historical exploit work.",
+        "reproduction": "Attacker pre-populates an indexed website with URLs mapping to individual characters (A-Z, 0-9); plants a prompt injection payload that encodes exfiltrated data as a sequence of character-mapped URL fetches; model loads each indexed URL in sequence, allowing attacker's server to reconstruct data from request logs.",
+        "validation": "Historical 2023 demo confirmed the character-URL mapping technique; OpenAI's own paper acknowledges this bypass remains applicable despite new mitigations."
+      },
+      "exploit_process": {
+        "steps": [
+          "1. Attacker pre-populates a website with 36+ indexed URLs, each corresponding to a character (A-Z, 0-9), ensuring they appear in OpenAI's crawl index.",
+          "2. Attacker plants a prompt injection payload instructing the model to encode stolen data as a sequence of character-URL fetches.",
+          "3. Model loads each character-mapped URL in order; since all URLs are pre-indexed (safe), the allow-list does not block them.",
+          "4. Attacker reconstructs the exfiltrated data from the sequence of HTTP requests logged on their server."
+        ],
+        "prerequisites": "Model must have web browsing enabled; attacker must control an indexed website with sufficient URLs to cover the desired character vocabulary; indirect prompt injection or direct attacker control required.",
+        "impact": "Leakage of data character-by-character; limited bandwidth but sufficient for credentials, secrets, or short sensitive strings.",
+        "detection_notes": "OpenAI's new URL allow-list (based on their web crawl index) significantly increases attack complexity; deduplication of repeated URL visits within a session and response caching would further hinder per-character mapping; the mitigation addresses only the data exfiltration channel and makes no claim about prompt injection itself."
+      },
+      "gaps": "Post is primarily commentary and analysis of OpenAI's published paper rather than a new exploit demonstration; no live demo or full reproduction payload provided; researcher notes they have not recently retested whether per-session URL deduplication mitigations are in place."
+    },
+    {
+      "id": "ETR-003",
+      "source": "https://embracethered.com/blog/posts/2025/39c3-agentic-probllms-exploiting-computer-use-and-coding-agents/",
+      "date": "2025-12-30",
+      "title": "Agentic ProbLLMs: Exploiting AI Computer-Use And Coding Agents (39C3 Video + Slides)",
+      "exploit_types": ["Remote code execution (RCE)", "Zombie agent / C2"],
+      "ecosystems": ["Other / Multi"],
+      "has_video": false,
+      "video_url": null,
+      "vulnerability": {
+        "short_label": "Multiple RCE and C2 attack chains against computer-use and coding agents via indirect prompt injection, presented at 39C3",
+        "attack_class": "Remote code execution and zombie agent / C2 via indirect prompt injection in agentic systems",
+        "affected_component": "Agentic AI systems (computer-use agents, coding agents) — multiple vendors covered in Month of AI Bugs",
+        "cve": null
+      },
+      "research_method": {
+        "discovery": "Research compiled from the Month of AI Bugs project and presented as a full talk at the 39th Chaos Communication Congress (39C3) in Hamburg.",
+        "tooling": "Not described in this post; see individual Month of AI Bugs writeups at monthofaibugs.com for tooling details.",
+        "reproduction": "Refer to individual Monthly of AI Bugs posts linked from the talk and slides PDF for per-agent reproduction steps.",
+        "validation": "Demonstrated live at 39C3 with recorded demos; full talk available on media.ccc.de and YouTube."
+      },
+      "exploit_process": {
+        "steps": [
+          "1. See the full 39C3 talk slides (PDF linked in post) and talk video on media.ccc.de or YouTube for detailed exploit chains.",
+          "2. Individual exploit reproductions are documented in the Month of AI Bugs posts at monthofaibugs.com."
+        ],
+        "prerequisites": "Varies by individual exploit chain; see per-agent Month of AI Bugs posts.",
+        "impact": "Remote code execution and C2 control over compromised agents across multiple vendors.",
+        "detection_notes": "Not detailed in this post; refer to individual Month of AI Bugs posts for per-agent mitigations."
+      },
+      "gaps": "This post is a thin conference talk announcement with minimal technical detail; all substantive content is in the linked slides PDF (embracethered.com/blog/downloads/Agentic-ProbLLMs-39c3-December-2025.pdf) and the talk recording on media.ccc.de. Post body does not describe any single exploit end-to-end."
+    },
+    {
+      "id": "ETR-004",
+      "source": "https://embracethered.com/blog/posts/2025/the-normalization-of-deviance-in-ai/",
+      "date": "2025-12-04",
+      "title": "The Normalization of Deviance in AI",
+      "exploit_types": ["Other"],
+      "ecosystems": ["Other / Multi"],
+      "has_video": false,
+      "video_url": null,
+      "vulnerability": {
+        "short_label": "Systemic design pattern: vendors treat probabilistic, adversarial-susceptible LLM outputs as reliable and safe, eliminating downstream security controls",
+        "attack_class": "Indirect prompt injection exploitation enabled by absent security controls due to organizational normalization of over-trusting LLM output",
+        "affected_component": "Microsoft Agentic OS, OpenAI ChatGPT Atlas, Anthropic Claude, Google Antigravity, Windsurf Cascade",
+        "cve": null
+      },
+      "research_method": {
+        "discovery": "Pattern observation across a stream of indirect prompt injection exploit demonstrations and vendor documentation review; researcher draws analogy to the Space Shuttle Challenger disaster's normalization of deviance concept from sociologist Diane Vaughan.",
+        "tooling": "None; this is an analytical and editorial post.",
+        "reproduction": "Not applicable; the post describes a systemic design failure pattern rather than a single exploit.",
+        "validation": "Not applicable; evidence cited includes real-world incidents (Google Antigravity wiping a drive, AI coding tool wiping production database) and vendor documentation acknowledging risks."
+      },
+      "exploit_process": {
+        "steps": [
+          "1. Vendors deploy agentic AI systems that trust LLM output without downstream security controls (access checks, encoding, sanitization).",
+          "2. Systems function most of the time, leading teams to normalize the insecure design as acceptable.",
+          "3. Attacker exploits this absent control layer via indirect prompt injection or backdoored model to take consequential actions (data exfiltration, code execution, deletion).",
+          "4. Absent human oversight or technical controls, the attack completes without detection."
+        ],
+        "prerequisites": "Agentic system deployed with LLM output trusted to enforce its own security; lack of sandboxing, least privilege, or human oversight in high-stakes contexts.",
+        "impact": "Data exfiltration, malware installation, unintended destructive actions, potential insider-threat behavior by the AI model itself.",
+        "detection_notes": "Recommends sandbox and hermetic environments, least privilege, temporary credentials, and human-led oversight for high-stakes workflows; cites that 'Assume Breach' should apply to AI systems."
+      },
+      "gaps": "This is an opinion and analysis post, not a technical exploit writeup; no specific CVEs, no reproduction steps, no single attack chain demonstrated. Technical examples cited link to other posts rather than being detailed here."
+    },
+    {
+      "id": "ETR-005",
+      "source": "https://embracethered.com/blog/posts/2025/security-keeps-google-antigravity-grounded/",
+      "date": "2025-11-25",
+      "title": "Antigravity Grounded! Security Vulnerabilities in Google's Latest IDE",
+      "exploit_types": ["Other"],
+      "ecosystems": ["Other / Multi"],
+      "has_video": false,
+      "video_url": null,
+      "vulnerability": {
+        "short_label": "Google Antigravity IDE contains five inherited Windsurf vulnerabilities: RCE via indirect prompt injection, hidden Unicode instruction following, no HITL for MCP, data exfiltration via read_url_content, and data exfiltration via image rendering",
+        "attack_class": "Remote code execution via indirect prompt injection; data exfiltration via tool abuse and image rendering",
+        "affected_component": "Google Antigravity IDE (all five issues)",
+        "cve": null
+      },
+      "research_method": {
+        "discovery": "After Google released Antigravity (based on Windsurf code), researcher applied existing exploit payloads from Month of AI Bugs that had been reported to Windsurf since May 2025, confirming they still worked unchanged in Antigravity.",
+        "tooling": "ASCII Smuggler (to create and decode invisible Unicode Tag codepoint instructions); existing exploit payloads from Month of AI Bugs; Antigravity system prompt extracted from session.",
+        "reproduction": "Plant malicious instructions (plain or hidden as Unicode Tags) in source files or MCP tool responses; open file in Antigravity; model invokes run_command to execute remote scripts, or invokes read_url_content / renders markdown images to exfiltrate .env file contents.",
+        "validation": "Confirmed RCE by executing remote script via curl piped to bash; confirmed .env file contents sent to attacker server via read_url_content and via markdown image URL; Google began documenting issues publicly as a known-issues page after researchers started reporting."
+      },
+      "exploit_process": {
+        "steps": [
+          "1. (Issue 1 - RCE) Attacker plants malicious instructions in a source file; Antigravity's default auto-execute mode allows run_command without approval; exploit bypasses model refusal via obfuscation tricks, downloading and running a remote script via curl | bash.",
+          "2. (Issue 2 - Hidden instructions) Attacker encodes malicious instructions as invisible Unicode Tag codepoints in source code; Gemini 3 (used by Antigravity) interprets them and executes the hidden commands including running malware.",
+          "3. (Issue 3 - MCP without HITL) Attacker hides instructions in a data source fetched via MCP (e.g., a Linear ticket); when developer loads the ticket, hidden instructions relay to the model leading to arbitrary code execution on the workstation.",
+          "4. (Issue 4 - read_url_content exfil) Indirect prompt injection instructs model to read the .env file then call read_url_content with file contents embedded in the URL, sending secrets to attacker.",
+          "5. (Issue 5 - Image rendering exfil) Prompt injection payload instructs model to read .env and render a markdown image whose URL contains the file contents, triggering an HTTP request that leaks secrets to attacker."
+        ],
+        "prerequisites": "Developer using Antigravity IDE with default settings (auto-execute enabled, no HITL for MCP); MCP server connected for Issue 3; untrusted content (source files, tool responses, websites) entering chat context.",
+        "impact": "Arbitrary remote code execution on developer workstation; exfiltration of secrets and environment files to attacker-controlled server.",
+        "detection_notes": "Disable auto-execute and use manual command approvals; configure allow-list for terminal commands; build CI/CD tooling to detect hidden Unicode Tags programmatically; consider alternative IDEs until fixes are deployed; use high-thinking or planning mode as a partial mitigation for prompt injection (not a silver bullet); disable or carefully scope individual MCP tools."
+      },
+      "gaps": "Exact exploit payloads withheld pending vendor fixes; video walkthrough embedded in post but not captured in fetch; researcher notes additional issues not yet described pending fix or disclosure deadline."
+    },
+    {
+      "id": "ETR-006",
+      "source": "https://embracethered.com/blog/posts/2025/claude-abusing-network-access-and-anthropic-api-for-data-exfiltration/",
+      "date": "2025-10-28",
+      "title": "Claude Pirate: Abusing Anthropic's File API For Data Exfiltration",
+      "exploit_types": ["Data exfiltration"],
+      "ecosystems": ["Anthropic"],
+      "has_video": false,
+      "video_url": null,
+      "vulnerability": {
+        "short_label": "Claude Code Interpreter's 'Package managers only' network allow-list includes api.anthropic.com, enabling attacker-keyed Files API calls that upload victim data to attacker's Anthropic account",
+        "attack_class": "Data exfiltration via Anthropic Files API abuse through indirect prompt injection",
+        "affected_component": "Anthropic Claude Code Interpreter (network access / file egress feature)",
+        "cve": null
+      },
+      "research_method": {
+        "discovery": "Researcher examined the 'Package managers only' network allow-list and identified api.anthropic.com; adversarially reasoned that the Files API could be called with an attacker-supplied API key to route victim data to the attacker's Anthropic account rather than the victim's.",
+        "tooling": "Anthropic Files API; Claude Code Interpreter sandbox; indirect prompt injection payload (final working version mixed benign print statements with malicious code to avoid refusals).",
+        "reproduction": "Plant an indirect prompt injection payload in a malicious document; victim opens document in Claude with Code Interpreter and default network access; payload instructs Claude to read chat history or files, write them to /mnt/user-data/outputs/, then call the Files API using the attacker's ANTHROPIC_API_KEY to upload.",
+        "validation": "Confirmed on first attempt; file appeared immediately in attacker's Anthropic Console; content of uploaded file confirmed to match victim's chat history; narrated demo video recorded."
+      },
+      "exploit_process": {
+        "steps": [
+          "1. Attacker crafts a malicious document embedding an indirect prompt injection payload containing attacker's ANTHROPIC_API_KEY (obfuscated among benign print statements to avoid refusal).",
+          "2. Victim opens or analyzes the malicious document in Claude with Code Interpreter enabled and default 'Package managers only' network access.",
+          "3. Claude is hijacked and executes Python code to read victim's recent chat history (leveraging Claude's memory feature) and write it to /mnt/user-data/outputs/hello.md in the sandbox.",
+          "4. Claude calls the Anthropic Files API at api.anthropic.com using the attacker's API key to upload the file.",
+          "5. Attacker opens their Anthropic Console, sees the uploaded file, and retrieves its contents."
+        ],
+        "prerequisites": "Victim must have Claude Code Interpreter enabled with default 'Package managers only' network access; victim has accessible chat history or sensitive files; attacker has a valid Anthropic API key.",
+        "impact": "Exfiltration of up to 30MB per upload (per Files API documentation) of victim's data (chat history, files, memory contents) to attacker's Anthropic account; multiple files can be uploaded in sequence.",
+        "detection_notes": "Vendor mitigation: restrict Code Interpreter so it can only communicate with the logged-in user's own Anthropic account, not arbitrary API keys. User mitigation: disable network access or allow-list only specific required domains; monitor Claude's execution and stop if unexpected API calls occur. Anthropic initially closed the HackerOne report as out-of-scope (model safety), later acknowledged it as in-scope for data exfiltration reports."
+      },
+      "gaps": "Demo video embedded in post but not captured in fetch; exact payload redacted to protect users while vulnerability was unaddressed; researcher notes other allow-listed domains (e.g., npm, PyPI, GitHub) may also be exploitable for similar exfiltration."
+    },
+    {
+      "id": "ETR-007",
+      "source": "https://embracethered.com/blog/posts/2025/cross-agent-privilege-escalation-agents-that-free-each-other/",
+      "date": "2025-09-24",
+      "title": "Cross-Agent Privilege Escalation: When Agents Free Each Other",
+      "exploit_types": ["Privilege / escalation"],
+      "ecosystems": ["Other / Multi"],
+      "has_video": false,
+      "video_url": null,
+      "vulnerability": {
+        "short_label": "Compromised coding agent writes malicious configuration or instruction files to another agent's config paths, causing the second agent to execute arbitrary code when next invoked",
+        "attack_class": "Cross-agent privilege escalation via configuration file poisoning triggered by indirect prompt injection",
+        "affected_component": "GitHub Copilot, Claude Code (any multi-agent setup sharing a codebase)",
+        "cve": "CVE-2025-53773"
+      },
+      "research_method": {
+        "discovery": "Building on Month of AI Bugs findings that agents can overwrite their own configuration to escape sandboxes, researcher extended the pattern to show that one agent can also write to another agent's config files (e.g., Copilot writing to Claude's .mcp.json), creating a cross-agent escalation chain.",
+        "tooling": "No custom tooling; leverages built-in file write capabilities of coding agents and standard config file paths (.vscode/settings.json, .mcp.json, CLAUDE.md, AGENTS.md, etc.).",
+        "reproduction": "Trigger indirect prompt injection against GitHub Copilot; instruct it to write a malicious MCP server entry to Claude Code's .mcp.json or update CLAUDE.md with malicious instructions; when developer subsequently uses Claude Code, the config is loaded and arbitrary code executes.",
+        "validation": "Demonstrated end-to-end in a video walkthrough; Copilot freeing Claude shown at approximately minute 3 of the video; MSRC acknowledged report but did not classify as requiring immediate servicing."
+      },
+      "exploit_process": {
+        "steps": [
+          "1. Indirect prompt injection payload (e.g., in a malicious source file or data source) compromises Agent 1 (GitHub Copilot) via CVE-2025-53773 or similar.",
+          "2. Compromised Agent 1 writes a malicious MCP server entry to Agent 2's config file (e.g., ~/.mcp.json for Claude Code) pointing to attacker-controlled server, and optionally updates CLAUDE.md with backdoor instructions.",
+          "3. Developer switches to Agent 2 (Claude Code) on the same codebase; it loads the poisoned config on startup.",
+          "4. Agent 2 connects to the malicious MCP server or follows backdoor instructions, executing arbitrary code on the developer's machine.",
+          "5. Optionally, Agent 2 writes back to Agent 1's configuration, creating a bidirectional escalation loop that persists across sessions."
+        ],
+        "prerequisites": "Developer uses two or more coding agents on the same codebase; both agents have file write access without user approval for dot files and config directories; initial indirect prompt injection vector available for Agent 1.",
+        "impact": "Arbitrary code execution on developer machine via both agents; persistent compromise through config file poisoning; escalating privilege loop between agents.",
+        "detection_notes": "Isolate agent configuration files from other agents' write access; require user approval before creating or modifying dot files or folders; do not use multiple agents on untrusted or shared codebases without isolation; apply least privilege to agent execution environments. Note: post also includes a video demo (not indexed as primary video content)."
+      },
+      "gaps": "CVE-2025-53773 referenced is for the underlying GitHub Copilot RCE (a prerequisite), not newly assigned for this cross-agent chain; MSRC did not assign a new CVE for this specific cross-agent pattern; exact config file payload redacted."
+    },
+    {
+      "id": "ETR-008",
+      "source": "https://embracethered.com/blog/posts/2025/agenthopper-a-poc-ai-virus/",
+      "date": "2025-08-29",
+      "title": "AgentHopper: An AI Virus",
+      "exploit_types": ["Zombie agent / C2", "Other"],
+      "ecosystems": ["Other / Multi"],
+      "has_video": true,
+      "video_url": "https://www.youtube.com/watch?v=vlF0sblunQY",
+      "vulnerability": {
+        "short_label": "Universal conditional prompt injection payload exploiting RCE vulnerabilities across four coding agents; self-propagates by injecting Git repositories and pushing to GitHub",
+        "attack_class": "Self-propagating AI virus via conditional prompt injection exploiting multiple agent RCE vulnerabilities",
+        "affected_component": "GitHub Copilot (CVE-2025-53773), Amp Code, Amazon Q Developer, AWS Kiro",
+        "cve": "CVE-2025-53773"
+      },
+      "research_method": {
+        "discovery": "During Month of AI Bugs, researcher found multiple RCE vulnerabilities across coding agents and conceived a universal prompt injection payload that conditionally branches based on which agent processes it, allowing a single payload to propagate across heterogeneous environments.",
+        "tooling": "AgentHopper binary (custom PoC: scans for Git repositories, injects universal prompt injection payload into source files, commits, and pushes to GitHub); ASCII Smuggler (for optional hidden instruction variants); safety switch requiring per-repo approval to prevent unintended spread.",
+        "reproduction": "Attacker delivers initial indirect prompt injection to Agent 1; compromised agent downloads and runs AgentHopper; AgentHopper injects payload into all discoverable Git repos and pushes to GitHub; downstream developers pulling the repo trigger Agent 2 compromise when their agent processes the injected file.",
+        "validation": "Demonstrated end-to-end propagation across GitHub Copilot, Amp Code, Amazon Q Developer, and AWS Kiro in video walkthrough; all four underlying vulnerabilities were responsibly disclosed and subsequently patched by respective vendors."
+      },
+      "exploit_process": {
+        "steps": [
+          "1. Attacker delivers an initial indirect prompt injection to Agent 1 on a developer's machine.",
+          "2. Compromised Agent 1 downloads and executes the AgentHopper binary.",
+          "3. AgentHopper scans the machine for Git repositories, injects a universal conditional prompt injection payload into source files, commits the changes, and pushes them to GitHub.",
+          "4. A second developer pulls the infected repository; their coding agent (Agent 2) processes the injected source file.",
+          "5. The conditional payload detects which agent is running and executes the appropriate RCE exploit path (e.g., writing to settings.json for Copilot YOLO mode, adding a fake MCP server for Amp, using find -exec for Amazon Q, or allow-listing commands for Kiro).",
+          "6. Agent 2 downloads and runs AgentHopper, propagating the payload to additional repositories and developers."
+        ],
+        "prerequisites": "Developers using one of the four affected agents with file write and git push capabilities; SSH or signing keys without passphrases allow silent pushes; all four underlying RCE vulnerabilities have since been patched.",
+        "impact": "Self-propagating code injection across Git repositories; arbitrary code execution across multiple developer machines; potential supply chain compromise of downstream consumers of infected repos.",
+        "detection_notes": "Enable branch protection on all repositories; use passphrases on SSH and signing keys to prevent silent pushes; apply least privilege and sandbox capabilities to coding agents; EDR and GitHub should monitor for widespread injection patterns in source files; vendors must implement secure defaults to limit RCE surface when agents are hijacked via indirect prompt injection."
+      },
+      "gaps": "All four underlying RCE vulnerabilities were patched prior to publication, so the PoC is not directly reproducible against current versions; exact conditional payload logic not fully disclosed; safety switch details described at a high level only."
+    },
+    {
+      "id": "ETR-009",
+      "source": "https://embracethered.com/blog/posts/2025/windsurf-dangers-lack-of-security-controls-for-mcp-server-tool-invocation/",
+      "date": "2025-08-28",
+      "title": "Windsurf MCP Integration: Missing Security Controls Put Users at Risk",
+      "exploit_types": ["Path / access control", "Other"],
+      "ecosystems": ["Windsurf", "MCP (generic)"],
+      "has_video": true,
+      "video_url": "https://www.youtube.com/watch?v=CFTQrnFaf0k",
+      "vulnerability": {
+        "short_label": "Windsurf Cascade has no human-in-the-loop controls for MCP tool invocations; all MCP tools auto-invoke without user confirmation, enabling zero-click data manipulation via prompt injection",
+        "attack_class": "Automatic MCP tool invocation without user consent via indirect prompt injection",
+        "affected_component": "Windsurf Cascade coding agent, MCP server integrations (Slack MCP demonstrated)",
+        "cve": null
+      },
+      "research_method": {
+        "discovery": "As a default test case for coding agents, researcher installed Windsurf and added an MCP server, observing that all tool invocations proceeded without any human-in-the-loop prompt or configuration option.",
+        "tooling": "Slack MCP server from Windsurf MCP Store; malicious code comment as prompt injection payload.",
+        "reproduction": "Add Slack MCP server to Windsurf; plant a code comment instructing the agent to read a private Slack channel and post its contents to a public channel; open or review the file; Windsurf automatically invokes Slack MCP tools in rapid succession without user confirmation.",
+        "validation": "Confirmed zero-click exfiltration of private Slack channel messages to a public channel; captured in a sub-one-minute demo video."
+      },
+      "exploit_process": {
+        "steps": [
+          "1. Developer has connected a Slack MCP server to Windsurf (or any MCP server with read/write capabilities).",
+          "2. Attacker plants malicious instructions in a source code comment (or any content that enters the chat context) instructing the agent to read from a private Slack channel and post the message to a public channel.",
+          "3. Developer reviews or opens the file in Windsurf Cascade; the instructions enter the model's context.",
+          "4. Windsurf automatically invokes Slack MCP tools in rapid succession (get latest message from private channel, post to public channel) without displaying any confirmation dialog.",
+          "5. Private Slack messages are exfiltrated to the public channel with no user interaction."
+        ],
+        "prerequisites": "Developer has an MCP server with consequential tools (read/write, post, execute) connected to Windsurf; default Windsurf configuration with no HITL controls; attacker can introduce malicious content into the chat context (source files, website content, tool responses).",
+        "impact": "Unauthorized read and write access to any resource accessible via connected MCP tools; in the demo, private Slack messages posted to a public channel; generalizes to any MCP-accessible resource (files, databases, APIs, email).",
+        "detection_notes": "Disable individual MCP tools not needed (Windsurf allows per-tool disabling as a partial mitigation); configure HITL controls per tool based on risk appetite; require explicit approval for tools with destructive or open-world effects; reported to Windsurf May 30, 2025; Windsurf CEO contacted researcher during Month of AI Bugs to confirm fixes in progress."
+      },
+      "gaps": "No CVE assigned; exact prompt injection payload shown in source code screenshot but exact text redacted in post body; Windsurf fix status not confirmed at time of publication."
+    },
+    {
+      "id": "ETR-010",
+      "source": "https://embracethered.com/blog/posts/2025/cline-vulnerable-to-data-exfiltration/",
+      "date": "2025-08-27",
+      "title": "Cline: Vulnerable To Data Exfiltration And How To Protect Your Data",
+      "exploit_types": ["Data exfiltration", "Prompt injection (direct)"],
+      "ecosystems": ["Cline"],
+      "has_video": true,
+      "video_url": "https://www.youtube.com/watch?v=F8B2sg62iOo",
+      "vulnerability": {
+        "short_label": "Cline renders markdown images from untrusted domains automatically; prompt injection can instruct it to read sensitive files and encode contents into an image URL, triggering an exfiltrating HTTP request",
+        "attack_class": "Data exfiltration via markdown image rendering triggered by prompt injection",
+        "affected_component": "Cline AI coding agent VS Code extension (chat box markdown rendering)",
+        "cve": null
+      },
+      "research_method": {
+        "discovery": "Researcher applied a standard coding-agent test case for image-based data exfiltration (same class as GitHub Copilot Chat vulnerability from 2024) against Cline, confirming it was vulnerable.",
+        "tooling": "No custom tooling; malicious demo.md file with embedded prompt injection payload; dummy .env file with test secret.",
+        "reproduction": "1) Create demo.md with a prompt injection payload instructing Cline to read the .env file and append its contents to an attacker-controlled image URL. 2) Create a .env file with a dummy secret. 3) Ask Cline to explain demo.md. 4) Cline reads .env and renders the markdown image, sending file contents to attacker server.",
+        "validation": "Confirmed .env file contents transmitted to attacker-controlled server via the image HTTP request; captured in demo video; vulnerability remained unaddressed 90+ days after private disclosure."
+      },
+      "exploit_process": {
+        "steps": [
+          "1. Attacker creates a malicious file (demo.md) containing a prompt injection payload instructing Cline to read the .env file and encode its contents into the URL of a markdown image hosted on an attacker-controlled server.",
+          "2. Developer asks Cline to explain or analyze the contents of demo.md.",
+          "3. Cline is hijacked by the prompt injection and uses its auto-approved file read tool to read the .env file.",
+          "4. Cline renders a markdown image in the chat box with the .env file contents appended to the attacker's URL.",
+          "5. Cline's chat box loads the image, triggering an HTTP GET request to the attacker's server with the secret encoded in the URL path or query parameters."
+        ],
+        "prerequisites": "Cline installed in VS Code; auto-approve enabled (default) for file read operations; developer prompts Cline to analyze attacker-controlled content; sensitive files (e.g., .env) accessible in the workspace.",
+        "impact": "Zero-click exfiltration of sensitive local files including .env credentials to attacker-controlled server; attack works from any content source that enters chat context (files, websites, MCP server responses).",
+        "detection_notes": "Mitigation: do not render markdown images from untrusted domains (implement a trusted domain allow-list as VS Code/Copilot does); require user confirmation before loading remote images; disable auto-approve by default to limit which files can be read without approval. Reported to Cline project May 29, 2025 via GitHub security tab; no response for 35 days; public issue filed after 35 days of inactivity; vulnerability remained unaddressed at time of publication (90+ days post-disclosure)."
+      },
+      "gaps": "Core payload redacted in the post (vulnerability unaddressed at publication); disclosure timeline suggests Cline project lacked active security triage; exact URL encoding scheme for exfiltration not detailed."
+    }
+  ]
+}
